@@ -3,650 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚔️ ВИХІД З АРМІЇ - Артур</title>
+    <title>⚔️ АРТУР: ЙОГО ЖИТТЄВІ ВИБОРИ</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            color: #333;
-            min-height: 100vh;
-            padding: 20px 0;
-        }
-        #root {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 100%);
+            color: #e0e0e0;
             min-height: 100vh;
         }
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeOut 0.8s ease-in-out 3.5s forwards;
+        }
+        @keyframes fadeOut { to { opacity: 0; } }
+        .splash-content { text-align: center; }
+        .splash-title {
+            font-size: 72px;
+            font-weight: 900;
+            color: #d4a574;
+            margin-bottom: 2rem;
+            animation: slideDown 0.8s ease-out;
+        }
+        @keyframes slideDown { from { transform: translateY(-50px); opacity: 0; } }
+        .splash-subtitle { font-size: 24px; color: #888; margin-bottom: 3rem; animation: slideUp 0.8s ease-out 0.2s backwards; }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } }
+        .splash-quote { font-size: 16px; color: #aaa; font-style: italic; max-width: 500px; line-height: 1.8; margin-top: 3rem; animation: fadeIn 1s ease-out 1s backwards; }
+        @keyframes fadeIn { from { opacity: 0; } }
+        .splash-dedication { font-size: 14px; color: #d4a574; margin-top: 3rem; border-top: 2px solid #d4a574; padding-top: 2rem; animation: fadeIn 1s ease-out 1.5s backwards; }
+        .splash-dedication-text { font-style: italic; margin-top: 1rem; color: #aaa; }
+        .loading-dots { font-size: 24px; margin-top: 3rem; animation: fadeIn 1s ease-out 2.5s backwards; }
+        .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #d4a574; margin: 0 4px; animation: pulse 1.4s ease-in-out infinite; }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes pulse { 0%, 60%, 100% { opacity: 0.3; } 30% { opacity: 1; } }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; }
+        .header { text-align: center; margin-bottom: 3rem; background: linear-gradient(135deg, #d4a574 0%, #a67c52 100%); padding: 3rem 2rem; border-radius: 16px; color: #fff; }
+        .title { font-size: 48px; font-weight: 900; margin-bottom: 0.5rem; }
+        .subtitle { font-size: 18px; opacity: 0.95; }
+        .dedication { background: linear-gradient(135deg, rgba(212, 165, 116, 0.2) 0%, rgba(212, 165, 116, 0.05) 100%); border: 2px solid #d4a574; border-radius: 12px; padding: 2rem; margin-bottom: 2rem; text-align: center; color: #d4a574; }
+        .dedication-title { font-size: 16px; font-weight: 700; margin-bottom: 1rem; }
+        .dedication-text { font-size: 14px; line-height: 1.8; margin-bottom: 0.5rem; }
+        .dedication-from { font-style: italic; color: #aaa; margin-top: 1rem; }
+        .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 3rem; }
+        .card { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border: 2px solid #d4a574; border-radius: 12px; padding: 2rem; cursor: pointer; transition: all 0.3s; text-align: center; }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(212, 165, 116, 0.3); }
+        .card-emoji { font-size: 64px; margin-bottom: 1rem; }
+        .card-title { font-size: 20px; font-weight: 700; color: #d4a574; margin-bottom: 0.75rem; }
+        .card-desc { font-size: 14px; color: #aaa; line-height: 1.6; }
+        .card-status { font-size: 12px; color: #888; margin-top: 1rem; text-transform: uppercase; }
+        .info-section { background: rgba(212, 165, 116, 0.1); border-left: 4px solid #d4a574; padding: 2rem; border-radius: 8px; margin-top: 2rem; }
+        .info-title { font-size: 18px; font-weight: 700; color: #d4a574; margin-bottom: 1rem; }
+        .info-text { font-size: 14px; color: #aaa; line-height: 1.8; }
+        .hidden { display: none; }
+        @media (max-width: 768px) { .cards { grid-template-columns: 1fr; } .title { font-size: 36px; } }
     </style>
 </head>
 <body>
-    <div id="root"></div>
+    <div class="splash-screen">
+        <div class="splash-content">
+            <div class="splash-title">⚔️ АРТУР</div>
+            <div class="splash-subtitle">ЙОГО ЖИТТЄВІ ВИБОРИ</div>
+            <div class="splash-quote">
+                "Хто знає себе й знає ворога,<br/>
+                у ста боях не буде переможений.<br/>
+                Хто не знає себе й не знає ворога,<br/>
+                в кожному боју буде переможений."<br/>
+                <br/>
+                — Сунь Дзи
+            </div>
+            <div class="splash-dedication">
+                ПРИСВЯЧУЄТЬСЯ
+                <div class="splash-dedication-text">
+                    АРТУРУ МАНЖОСУ<br/>
+                    <br/>
+                    "На довгу память про те, яким ти мав(ла) б стати,<br/>
+                    коли б робив(ла) вибори не батьків, а своїм умом."<br/>
+                    <br/>
+                    З братньою повагою,<br/>
+                    <strong>БОГДАНЧІК (Бодя)</strong>
+                </div>
+            </div>
+            <div class="loading-dots">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+    </div>
 
-    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/react.min.js"></script>
-    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/react-dom.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+    <div id="main-menu" class="hidden">
+        <div class="container">
+            <div class="header">
+                <h1 class="title">⚔️ АРТУР</h1>
+                <p class="subtitle">Його Життєві Вибори</p>
+            </div>
 
-    <script type="text/babel">
-        const ArmyGame = () => {
-          const [gameState, setGameState] = React.useState('intro');
-          const [selectedSoldiers, setSelectedSoldiers] = React.useState([]);
-          const [currentQuestion, setCurrentQuestion] = React.useState(0);
-          const [answers, setAnswers] = React.useState({});
-          const [psychology, setPsychology] = React.useState(null);
-          const [progress, setProgress] = React.useState(() => {
-            const saved = localStorage.getItem('armyGameProgress');
-            return saved ? JSON.parse(saved) : { level: 1, completed: false };
-          });
+            <div class="dedication">
+                <div class="dedication-title">📜 ПОСВЯТА</div>
+                <div class="dedication-text">
+                    Артур, це гра про тебе. Про те, яким ти міг би стати в альтернативному світі, 
+                    де ніхто не примушує, а лише пропонує.
+                    <br/><br/>
+                    50 питань - твої вибори від дитинства до 2005 року.
+                    <br/><br/>
+                    На кінці ми дізнаємось: чи ти природна воєнна людина чи глибоко творча особистість?
+                </div>
+                <div class="dedication-from">
+                    — Від Богданчіка, 2005<br/>
+                    "Дружба з тобою - знак правильного шляху"
+                </div>
+            </div>
 
-          React.useEffect(() => {
-            localStorage.setItem('armyGameProgress', JSON.stringify(progress));
-          }, [progress]);
+            <div class="info-section">
+                <div class="info-title">🎯 Про гру</div>
+                <div class="info-text">
+                    50 питань, які змінять твоє розуміння того, хто ти насправді. 
+                    Від дитинства до 2005 року. 4 рівні. Один вибір в кінці.
+                    <br/><br/>
+                    <strong>⏱️ Час: 30-40 хвилин</strong><br/>
+                    <strong>📊 Рівнів: 4</strong><br/>
+                    <strong>🎯 Питань: 50</strong><br/>
+                    <strong>🔐 Пароль: 95</strong>
+                </div>
+            </div>
 
-          const soldiers = [
-            {
-              id: 1,
-              name: 'Сашко',
-              age: 19,
-              description: 'Спокійний, але потурбований. Побоюється смерті, але слідує наказам.',
-              traits: 'introvert, anxious'
-            },
-            {
-              id: 2,
-              name: 'Олег',
-              age: 21,
-              description: 'Енергійний та самовпевнений. Хоче доказати своє і стати героєм.',
-              traits: 'extrovert, ambitious'
-            },
-            {
-              id: 3,
-              name: 'Миколя',
-              age: 22,
-              description: 'Спокійний лідер. Непомітний, але люди йому довіряють і слідують за ним.',
-              traits: 'leader, calm'
-            },
-            {
-              id: 4,
-              name: 'Грицько',
-              age: 20,
-              description: 'Веселун і гаврок. Полегшує тяжкі моменти, але іноді легкомисленний.',
-              traits: 'extrovert, joker'
-            }
-          ];
-
-          const questions = [
-            {
-              id: 1,
-              question: 'Ти обираєш найсильніших бійців для себе чи найбільш потребуючих допомоги?',
-              type: 'leadership',
-              answers: [
-                { text: 'Найсильніших - команда повинна бути боєздатна', value: 'authoritarian' },
-                { text: 'Найбільш потребуючих - хочу їм допомогти', value: 'empath' },
-                { text: 'Змішано - баланс між силою і потребами', value: 'balanced' }
-              ]
-            },
-            {
-              id: 2,
-              question: 'Що тебе більше лякає в армії - смерть чи потеря смислу життя?',
-              type: 'existential',
-              answers: [
-                { text: 'Смерть - це найстрашніше', value: 'fear_death' },
-                { text: 'Потеря смислу - це гірше', value: 'existential_crisis' },
-                { text: 'Обидва однаково страшні', value: 'both_afraid' }
-              ]
-            },
-            {
-              id: 3,
-              question: 'Коли ти в кімнатці один, що ти робиш? (за час відпочинку)',
-              type: 'personality',
-              answers: [
-                { text: 'Читаю, роздумую про сенс', value: 'introvert_thinker' },
-                { text: 'Граю з товаришами, веселюся', value: 'extrovert_social' },
-                { text: 'Писав би фото, знімав би відео', value: 'creative' }
-              ]
-            },
-            {
-              id: 4,
-              question: 'Що ти бачиш своєю роботою в армії - службу або краї суспільства?',
-              type: 'purpose',
-              answers: [
-                { text: 'Це моя служба і обов\'язок перед Батьківщиною', value: 'duty' },
-                { text: 'Це крає суспільства, мені скучно', value: 'meaningless' },
-                { text: 'Це можливість навчатись і розвиватись', value: 'growth' }
-              ]
-            }
-          ];
-
-          const handleSoldierSelect = (soldierName) => {
-            if (selectedSoldiers.includes(soldierName)) {
-              setSelectedSoldiers(selectedSoldiers.filter(s => s !== soldierName));
-            } else if (selectedSoldiers.length < 3) {
-              setSelectedSoldiers([...selectedSoldiers, soldierName]);
-            }
-          };
-
-          const handleStartQuestions = () => {
-            if (selectedSoldiers.length >= 2) {
-              setGameState('questions');
-              setCurrentQuestion(0);
-            }
-          };
-
-          const handleAnswerQuestion = (answerValue) => {
-            const newAnswers = { ...answers, [currentQuestion]: answerValue };
-            setAnswers(newAnswers);
-
-            if (currentQuestion < questions.length - 1) {
-              setCurrentQuestion(currentQuestion + 1);
-            } else {
-              analyzePlayer(newAnswers);
-              setGameState('analysis');
-            }
-          };
-
-          const analyzePlayer = (playerAnswers) => {
-            let psychoProfile = {
-              traits: [],
-              recommendation: '',
-              canLeave: false,
-              motivation: '',
-              depth: 0
-            };
-
-            const values = Object.values(playerAnswers);
-            
-            if (playerAnswers[0] === 'empath') {
-              psychoProfile.traits.push('Емпат');
-              psychoProfile.depth += 2;
-            } else if (playerAnswers[0] === 'balanced') {
-              psychoProfile.traits.push('Збалансований лідер');
-              psychoProfile.depth += 1;
-            } else {
-              psychoProfile.traits.push('Авторитарний');
-            }
-
-            if (playerAnswers[1] === 'existential_crisis') {
-              psychoProfile.traits.push('Шукає сенс');
-              psychoProfile.depth += 3;
-              psychoProfile.canLeave = true;
-            } else if (playerAnswers[1] === 'both_afraid') {
-              psychoProfile.traits.push('Амбівалентний');
-              psychoProfile.depth += 1;
-            }
-
-            if (playerAnswers[2] === 'creative') {
-              psychoProfile.traits.push('Творець');
-              psychoProfile.depth += 2;
-              psychoProfile.motivation = 'Хочеш вирватись в творчість (фото/відео)';
-            } else if (playerAnswers[2] === 'introvert_thinker') {
-              psychoProfile.traits.push('Философ');
-              psychoProfile.depth += 2;
-            }
-
-            if (playerAnswers[3] === 'meaningless') {
-              psychoProfile.traits.push('Скептик щодо армії');
-              psychoProfile.canLeave = true;
-              psychoProfile.depth += 2;
-            } else if (playerAnswers[3] === 'growth') {
-              psychoProfile.traits.push('Прагне розвитку');
-              psychoProfile.depth += 1;
-            }
-
-            if (psychoProfile.depth >= 6) {
-              psychoProfile.recommendation = 'Артур, у тебе глибока натура. 12 років ти боротимешся з тим, що сьогодні вже усвідомлюєш: армія - це не твій шлях. Але ти воєш честі свої обіцянки.';
-              psychoProfile.canLeave = true;
-            } else if (psychoProfile.depth >= 4) {
-              psychoProfile.recommendation = 'Ти здатний служити, але щось у середині гніте. Це нормально. Потрібен час, щоб зрозуміти, який шлях твій.';
-            } else {
-              psychoProfile.recommendation = 'Ти природжений воєнний або успішно себе переконав у цьому. Але запитай себе - це твій вибір чи примус?';
-            }
-
-            setPsychology(psychoProfile);
-          };
-
-          const styles = {
-            container: {
-              maxWidth: '600px',
-              margin: '0 auto',
-              padding: '2rem 1rem',
-              fontFamily: 'system-ui, -apple-system, sans-serif'
-            },
-            header: {
-              textAlign: 'center',
-              marginBottom: '2rem'
-            },
-            title: {
-              fontSize: '28px',
-              fontWeight: '700',
-              marginBottom: '0.5rem',
-              color: '#f0f0f0'
-            },
-            subtitle: {
-              fontSize: '14px',
-              color: '#999',
-              marginTop: '0.5rem'
-            },
-            card: {
-              background: '#2a2a2a',
-              borderRadius: '12px',
-              padding: '2rem',
-              marginBottom: '1.5rem',
-              border: '1px solid #444',
-              color: '#f0f0f0'
-            },
-            year: {
-              fontSize: '12px',
-              color: '#888',
-              textTransform: 'uppercase',
-              letterSpacing: '1px',
-              marginBottom: '0.5rem'
-            },
-            location: {
-              fontSize: '18px',
-              fontWeight: '700',
-              color: '#d4a574',
-              marginBottom: '1.5rem'
-            },
-            narrative: {
-              fontSize: '14px',
-              lineHeight: '1.8',
-              color: '#ccc',
-              marginBottom: '2rem'
-            },
-            soldiersGrid: {
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: '1rem',
-              marginBottom: '1.5rem'
-            },
-            soldierCard: {
-              background: '#2a2a2a',
-              border: '2px solid #444',
-              borderRadius: '8px',
-              padding: '1rem',
-              cursor: 'pointer',
-              transition: 'all 0.3s',
-              position: 'relative',
-              color: '#f0f0f0'
-            },
-            soldierCardSelected: {
-              borderColor: '#d4a574',
-              backgroundColor: '#1a1a1a',
-              boxShadow: '0 0 10px rgba(212, 165, 116, 0.3)'
-            },
-            soldierName: {
-              fontSize: '16px',
-              fontWeight: '700',
-              color: '#f0f0f0',
-              marginBottom: '0.25rem'
-            },
-            soldierAge: {
-              fontSize: '12px',
-              color: '#888',
-              marginBottom: '0.5rem'
-            },
-            soldierDesc: {
-              fontSize: '13px',
-              lineHeight: '1.5',
-              color: '#aaa'
-            },
-            checkmark: {
-              position: 'absolute',
-              top: '10px',
-              right: '10px',
-              fontSize: '24px',
-              color: '#d4a574'
-            },
-            selectedInfo: {
-              fontSize: '14px',
-              color: '#888',
-              marginBottom: '1rem',
-              textAlign: 'center'
-            },
-            selectedList: {
-              marginTop: '0.5rem',
-              display: 'flex',
-              gap: '0.5rem',
-              justifyContent: 'center',
-              flexWrap: 'wrap'
-            },
-            selectedTag: {
-              background: '#d4a574',
-              color: '#1a1a1a',
-              padding: '0.25rem 0.75rem',
-              borderRadius: '16px',
-              fontSize: '12px',
-              fontWeight: '600'
-            },
-            questionText: {
-              fontSize: '16px',
-              fontWeight: '600',
-              color: '#f0f0f0',
-              marginBottom: '1.5rem',
-              lineHeight: '1.6'
-            },
-            answersContainer: {
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '1rem'
-            },
-            answerButton: {
-              background: '#333',
-              border: '1px solid #555',
-              borderRadius: '8px',
-              padding: '1rem',
-              fontSize: '14px',
-              cursor: 'pointer',
-              transition: 'all 0.3s',
-              textAlign: 'left',
-              lineHeight: '1.5',
-              color: '#ccc'
-            },
-            traitsBox: {
-              background: '#1a1a1a',
-              border: '1px solid #d4a574',
-              borderRadius: '8px',
-              padding: '1rem',
-              marginBottom: '1.5rem'
-            },
-            traitsTitle: {
-              fontSize: '12px',
-              color: '#d4a574',
-              textTransform: 'uppercase',
-              marginBottom: '0.75rem',
-              fontWeight: '700'
-            },
-            traitTag: {
-              display: 'inline-block',
-              background: '#d4a574',
-              color: '#1a1a1a',
-              padding: '0.5rem 1rem',
-              borderRadius: '4px',
-              fontSize: '13px',
-              marginRight: '0.5rem',
-              marginBottom: '0.5rem',
-              fontWeight: '600'
-            },
-            recommendationBox: {
-              background: '#1a1a1a',
-              border: '1px solid #555',
-              borderRadius: '8px',
-              padding: '1.5rem',
-              marginBottom: '1.5rem'
-            },
-            recommendationTitle: {
-              fontSize: '14px',
-              fontWeight: '700',
-              color: '#f0f0f0',
-              marginBottom: '0.75rem'
-            },
-            recommendationText: {
-              fontSize: '14px',
-              lineHeight: '1.8',
-              color: '#aaa',
-              margin: 0
-            },
-            motivationBox: {
-              background: 'rgba(0, 102, 204, 0.1)',
-              border: '1px solid #0066cc',
-              borderRadius: '8px',
-              padding: '1.5rem',
-              marginBottom: '1.5rem'
-            },
-            motivationTitle: {
-              fontSize: '14px',
-              fontWeight: '700',
-              color: '#88ccff',
-              marginBottom: '0.75rem'
-            },
-            motivationText: {
-              fontSize: '14px',
-              lineHeight: '1.8',
-              color: '#88ccff',
-              margin: 0
-            },
-            canLeavebox: {
-              padding: '1rem',
-              textAlign: 'center',
-              marginBottom: '1.5rem'
-            },
-            buttonPrimary: {
-              background: '#d4a574',
-              color: '#1a1a1a',
-              border: 'none',
-              borderRadius: '8px',
-              padding: '1rem 2rem',
-              fontSize: '14px',
-              fontWeight: '700',
-              cursor: 'pointer',
-              transition: 'all 0.3s',
-              width: '100%'
-            },
-            buttonDisabled: {
-              opacity: '0.5',
-              cursor: 'not-allowed'
-            },
-            progressBar: {
-              height: '4px',
-              background: '#444',
-              borderRadius: '2px',
-              overflow: 'hidden',
-              marginTop: '2rem'
-            },
-            progressFill: {
-              height: '100%',
-              background: '#d4a574',
-              transition: 'width 0.3s'
-            },
-            levelText: {
-              textAlign: 'center',
-              fontSize: '12px',
-              color: '#888',
-              marginTop: '0.75rem',
-              textTransform: 'uppercase',
-              letterSpacing: '1px'
-            }
-          };
-
-          if (gameState === 'intro') {
-            return (
-              <div style={styles.container}>
-                <div style={styles.header}>
-                  <h1 style={styles.title}>⚔️ ВИХІД З АРМІЇ</h1>
-                  <p style={styles.subtitle}>Артур - твоя історія починається весною 2005</p>
+            <div class="cards">
+                <div class="card" onclick="location.href='childhood.html'">
+                    <div class="card-emoji">👶</div>
+                    <div class="card-title">Рівень 1: Дитинство</div>
+                    <div class="card-desc">0-6 років. Де все починається. 11 питань про твої корені.</div>
+                    <div class="card-status">Рекомендується почати звідси</div>
                 </div>
 
-                <div style={styles.card}>
-                  <div style={styles.year}>2005 рік, весна</div>
-                  <div style={styles.location}>95 БРИГАДА, КОСУХА</div>
-                  
-                  <div style={styles.narrative}>
-                    <p>Прапорщик Артур прибув до нової бригади. Новий призив. Нові люди.</p>
-                    <p>Перед ним стоїть вибір: кого обрати собі у команду? Хто йому поможе?</p>
-                    <p>Давай почнемо звідти...</p>
-                  </div>
-
-                  <button 
-                    onClick={() => setGameState('chooseSoldiers')}
-                    style={styles.buttonPrimary}
-                  >
-                    РОЗПОЧАТИ → ВИБІР БІЙЦІВ
-                  </button>
+                <div class="card" style="opacity: 0.5; cursor: not-allowed;">
+                    <div class="card-emoji">🎓</div>
+                    <div class="card-title">Рівень 2: Школа</div>
+                    <div class="card-desc">7-11 років. Перші друзі й вчителі. 14 питань про становлення.</div>
+                    <div class="card-status">Заблоковано — закінчи Рівень 1</div>
                 </div>
 
-                <div style={styles.progressBar}>
-                  <div style={{...styles.progressFill, width: '33%'}}></div>
-                </div>
-                <div style={styles.levelText}>РІВЕНЬ 1/3 - 2005</div>
-              </div>
-            );
-          }
-
-          if (gameState === 'chooseSoldiers') {
-            return (
-              <div style={styles.container}>
-                <div style={styles.header}>
-                  <h1 style={styles.title}>ВИБІР КОМАНДИ</h1>
-                  <p style={styles.subtitle}>Обери собі 2-3 бійців для своєї команди</p>
+                <div class="card" style="opacity: 0.5; cursor: not-allowed;">
+                    <div class="card-emoji">👦</div>
+                    <div class="card-title">Рівень 3: 9 Класів</div>
+                    <div class="card-desc">12-16 років. Період дорослішання. 18 критичних питань.</div>
+                    <div class="card-status">Заблоковано — закінчи Рівень 2</div>
                 </div>
 
-                <div style={styles.card}>
-                  <div style={styles.soldiersGrid}>
-                    {soldiers.map(soldier => (
-                      <div
-                        key={soldier.id}
-                        onClick={() => handleSoldierSelect(soldier.name)}
-                        style={{
-                          ...styles.soldierCard,
-                          ...(selectedSoldiers.includes(soldier.name) ? styles.soldierCardSelected : {})
-                        }}
-                      >
-                        <div style={styles.soldierName}>{soldier.name}</div>
-                        <div style={styles.soldierAge}>{soldier.age} років</div>
-                        <div style={styles.soldierDesc}>{soldier.description}</div>
-                        {selectedSoldiers.includes(soldier.name) && (
-                          <div style={styles.checkmark}>✓</div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-
-                  <div style={styles.selectedInfo}>
-                    Обрано: {selectedSoldiers.length}/3
-                    {selectedSoldiers.length > 0 && (
-                      <div style={styles.selectedList}>
-                        {selectedSoldiers.map(name => (
-                          <span key={name} style={styles.selectedTag}>{name}</span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  <button 
-                    onClick={handleStartQuestions}
-                    disabled={selectedSoldiers.length < 2}
-                    style={{
-                      ...styles.buttonPrimary,
-                      ...(selectedSoldiers.length < 2 ? styles.buttonDisabled : {})
-                    }}
-                  >
-                    ДАЛІ → ПИТАННЯ ({selectedSoldiers.length}/2)
-                  </button>
+                <div class="card" style="opacity: 0.5; cursor: not-allowed;">
+                    <div class="card-emoji">🎓</div>
+                    <div class="card-title">Рівень 4: Інститут</div>
+                    <div class="card-desc">17-22 років. Вибір & АРМІЯ. 7 питань перед рішенням.</div>
+                    <div class="card-status">Заблоковано — закінчи Рівень 3</div>
                 </div>
-              </div>
-            );
-          }
+            </div>
 
-          if (gameState === 'questions') {
-            const question = questions[currentQuestion];
-            
-            return (
-              <div style={styles.container}>
-                <div style={styles.header}>
-                  <h1 style={styles.title}>ПИТАННЯ {currentQuestion + 1}/4</h1>
-                  <p style={styles.subtitle}>Артур, хто ти насправді?</p>
+            <div class="info-section">
+                <div class="info-title">⚔️ Мудрість від Богданчіка</div>
+                <div class="info-text">
+                    "Артур, знай: в тебе є вибір в кожний момент. Навіть коли здається, що немає. 
+                    Цей вибір визначає тебе більше, ніж будь-яка обставина."
                 </div>
+            </div>
+        </div>
+    </div>
 
-                <div style={styles.card}>
-                  <div style={styles.questionText}>{question.question}</div>
-                  
-                  <div style={styles.answersContainer}>
-                    {question.answers.map((answer, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => handleAnswerQuestion(answer.value)}
-                        style={styles.answerButton}
-                        onMouseOver={(e) => {
-                          e.target.style.background = '#444';
-                          e.target.style.borderColor = '#d4a574';
-                        }}
-                        onMouseOut={(e) => {
-                          e.target.style.background = '#333';
-                          e.target.style.borderColor = '#555';
-                        }}
-                      >
-                        {answer.text}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div style={styles.progressBar}>
-                  <div style={{...styles.progressFill, width: `${((currentQuestion + 1) / questions.length) * 100}%`}}></div>
-                </div>
-              </div>
-            );
-          }
-
-          if (gameState === 'analysis' && psychology) {
-            return (
-              <div style={styles.container}>
-                <div style={styles.header}>
-                  <h1 style={styles.title}>ТВІЙ ПСИХОЛОГІЧНИЙ ПОРТРЕТ</h1>
-                  <p style={styles.subtitle}>2005 рік - що ти собою являєш</p>
-                </div>
-
-                <div style={styles.card}>
-                  <div style={styles.traitsBox}>
-                    <div style={styles.traitsTitle}>Твої якості:</div>
-                    {psychology.traits.map((trait, idx) => (
-                      <span key={idx} style={styles.traitTag}>{trait}</span>
-                    ))}
-                  </div>
-
-                  <div style={styles.recommendationBox}>
-                    <div style={styles.recommendationTitle}>💭 Аналіз:</div>
-                    <p style={styles.recommendationText}>{psychology.recommendation}</p>
-                  </div>
-
-                  {psychology.motivation && (
-                    <div style={styles.motivationBox}>
-                      <div style={styles.motivationTitle}>🎯 Твоя мотивація:</div>
-                      <p style={styles.motivationText}>{psychology.motivation}</p>
-                    </div>
-                  )}
-
-                  <div style={styles.canLeavebox}>
-                    {psychology.canLeave ? (
-                      <p style={{color: '#d4a574', fontSize: '16px', fontWeight: 'bold'}}>
-                        ⚠️ Артур, ти вже розумієш, що хочеш ВИЙТИ. Але це займе ще 12 років...
-                      </p>
-                    ) : (
-                      <p style={{color: '#888', fontSize: '16px'}}>
-                        Ти все ще не впевнений. Служба дає тобі щось важливе.
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                <button 
-                  onClick={() => {
-                    setProgress({ ...progress, level: 2 });
-                    setGameState('intro');
-                    setSelectedSoldiers([]);
-                    setAnswers({});
-                    setCurrentQuestion(0);
-                  }}
-                  style={styles.buttonPrimary}
-                >
-                  ДАЛІ → РІВЕНЬ 2 (2009) - КІМНАТКА НА КОСУСЕ
-                </button>
-
-                <div style={styles.progressBar}>
-                  <div style={{...styles.progressFill, width: '33%'}}></div>
-                </div>
-                <div style={styles.levelText}>РІВЕНЬ 1/3 ЗАВЕРШЕНО ✓</div>
-              </div>
-            );
-          }
-
-          return <div>Loading...</div>;
-        };
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<ArmyGame />);
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelector('.splash-screen').style.display = 'none';
+                document.getElementById('main-menu').classList.remove('hidden');
+            }, 3500);
+        });
     </script>
 </body>
 </html>
