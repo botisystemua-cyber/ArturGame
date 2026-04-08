@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚔️ ВИХІД З АРМІЇ - Артур</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #f0f0f0;
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+        #root {
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #f0f0f0;
+        }
+        .subtitle {
+            font-size: 14px;
+            color: #999;
+            margin-top: 0.5rem;
+        }
+        .card {
+            background: #2a2a2a;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #444;
+            color: #f0f0f0;
+        }
+        .year {
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+        .location {
+            font-size: 18px;
+            font-weight: 700;
+            color: #d4a574;
+            margin-bottom: 1.5rem;
+        }
+        .narrative {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #ccc;
+            margin-bottom: 2rem;
+        }
+        .narrative p {
+            margin-bottom: 0.75rem;
+        }
+        .soldiers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .soldier-card {
+            background: #2a2a2a;
+            border: 2px solid #444;
+            border-radius: 8px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            color: #f0f0f0;
+        }
+        .soldier-card:hover {
+            border-color: #888;
+        }
+        .soldier-card.selected {
+            border-color: #d4a574;
+            background-color: #1a1a1a;
+            box-shadow: 0 0 10px rgba(212, 165, 116, 0.3);
+        }
+        .soldier-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #f0f0f0;
+            margin-bottom: 0.25rem;
+        }
+        .soldier-age {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 0.5rem;
+        }
+        .soldier-desc {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #aaa;
+        }
+        .checkmark {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: #d4a574;
+        }
+        .selected-info {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .selected-list {
+            margin-top: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .selected-tag {
+            background: #d4a574;
+            color: #1a1a1a;
+            padding: 0.25rem 0.75rem;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .question-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: #f0f0f0;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .answer-button {
+            background: #333;
+            border: 1px solid #555;
+            border-radius: 8px;
+            padding: 1rem;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+            line-height: 1.5;
+            color: #ccc;
+            font-family: inherit;
+        }
+        .answer-button:hover {
+            background: #444;
+            border-color: #d4a574;
+        }
+        .traits-box {
+            background: #1a1a1a;
+            border: 1px solid #d4a574;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .traits-title {
+            font-size: 12px;
+            color: #d4a574;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+        .trait-tag {
+            display: inline-block;
+            background: #d4a574;
+            color: #1a1a1a;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .recommendation-box {
+            background: #1a1a1a;
+            border: 1px solid #555;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .recommendation-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #f0f0f0;
+            margin-bottom: 0.75rem;
+        }
+        .recommendation-text {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #aaa;
+            margin: 0;
+        }
+        .motivation-box {
+            background: rgba(0, 102, 204, 0.1);
+            border: 1px solid #0066cc;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .motivation-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #88ccff;
+            margin-bottom: 0.75rem;
+        }
+        .motivation-text {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #88ccff;
+            margin: 0;
+        }
+        .can-leave-box {
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .can-leave-yes {
+            color: #d4a574;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .can-leave-no {
+            color: #888;
+            font-size: 16px;
+        }
+        .button-primary {
+            background: #d4a574;
+            color: #1a1a1a;
+            border: none;
+            border-radius: 8px;
+            padding: 1rem 2rem;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-family: inherit;
+        }
+        .button-primary:hover:not(:disabled) {
+            background: #e5b684;
+        }
+        .button-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .progress-bar {
+            height: 4px;
+            background: #444;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #d4a574;
+            transition: width 0.3s;
+        }
+        .level-text {
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+            margin-top: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        (function () {
+            'use strict';
+
+            const soldiers = [
+                {
+                    id: 1,
+                    name: 'Сашко',
+                    age: 19,
+                    description: 'Спокійний, але потурбований. Побоюється смерті, але слідує наказам.',
+                    traits: 'introvert, anxious'
+                },
+                {
+                    id: 2,
+                    name: 'Олег',
+                    age: 21,
+                    description: 'Енергійний та самовпевнений. Хоче доказати своє і стати героєм.',
+                    traits: 'extrovert, ambitious'
+                },
+                {
+                    id: 3,
+                    name: 'Миколя',
+                    age: 22,
+                    description: 'Спокійний лідер. Непомітний, але люди йому довіряють і слідують за ним.',
+                    traits: 'leader, calm'
+                },
+                {
+                    id: 4,
+                    name: 'Грицько',
+                    age: 20,
+                    description: 'Веселун і гаврок. Полегшує тяжкі моменти, але іноді легкомисленний.',
+                    traits: 'extrovert, joker'
+                }
+            ];
+
+            const questions = [
+                {
+                    id: 1,
+                    question: 'Ти обираєш найсильніших бійців для себе чи найбільш потребуючих допомоги?',
+                    type: 'leadership',
+                    answers: [
+                        { text: 'Найсильніших - команда повинна бути боєздатна', value: 'authoritarian' },
+                        { text: 'Найбільш потребуючих - хочу їм допомогти', value: 'empath' },
+                        { text: 'Змішано - баланс між силою і потребами', value: 'balanced' }
+                    ]
+                },
+                {
+                    id: 2,
+                    question: 'Що тебе більше лякає в армії - смерть чи потеря смислу життя?',
+                    type: 'existential',
+                    answers: [
+                        { text: 'Смерть - це найстрашніше', value: 'fear_death' },
+                        { text: 'Потеря смислу - це гірше', value: 'existential_crisis' },
+                        { text: 'Обидва однаково страшні', value: 'both_afraid' }
+                    ]
+                },
+                {
+                    id: 3,
+                    question: 'Коли ти в кімнатці один, що ти робиш? (за час відпочинку)',
+                    type: 'personality',
+                    answers: [
+                        { text: 'Читаю, роздумую про сенс', value: 'introvert_thinker' },
+                        { text: 'Граю з товаришами, веселюся', value: 'extrovert_social' },
+                        { text: 'Писав би фото, знімав би відео', value: 'creative' }
+                    ]
+                },
+                {
+                    id: 4,
+                    question: 'Що ти бачиш своєю роботою в армії - службу або краї суспільства?',
+                    type: 'purpose',
+                    answers: [
+                        { text: 'Це моя служба і обов\'язок перед Батьківщиною', value: 'duty' },
+                        { text: 'Це крає суспільства, мені скучно', value: 'meaningless' },
+                        { text: 'Це можливість навчатись і розвиватись', value: 'growth' }
+                    ]
+                }
+            ];
+
+            const state = {
+                gameState: 'intro',
+                selectedSoldiers: [],
+                currentQuestion: 0,
+                answers: {},
+                psychology: null,
+                progress: loadProgress()
+            };
+
+            function loadProgress() {
+                try {
+                    const saved = localStorage.getItem('armyGameProgress');
+                    return saved ? JSON.parse(saved) : { level: 1, completed: false };
+                } catch (e) {
+                    return { level: 1, completed: false };
+                }
+            }
+
+            function saveProgress() {
+                try {
+                    localStorage.setItem('armyGameProgress', JSON.stringify(state.progress));
+                } catch (e) {
+                    // ignore
+                }
+            }
+
+            function el(tag, attrs, children) {
+                const node = document.createElement(tag);
+                if (attrs) {
+                    for (const key in attrs) {
+                        if (key === 'class') {
+                            node.className = attrs[key];
+                        } else if (key === 'text') {
+                            node.textContent = attrs[key];
+                        } else if (key === 'html') {
+                            node.innerHTML = attrs[key];
+                        } else if (key.startsWith('on') && typeof attrs[key] === 'function') {
+                            node.addEventListener(key.slice(2).toLowerCase(), attrs[key]);
+                        } else if (key === 'disabled') {
+                            if (attrs[key]) node.disabled = true;
+                        } else if (key === 'style') {
+                            node.setAttribute('style', attrs[key]);
+                        } else {
+                            node.setAttribute(key, attrs[key]);
+                        }
+                    }
+                }
+                if (children) {
+                    const list = Array.isArray(children) ? children : [children];
+                    list.forEach(function (child) {
+                        if (child == null || child === false) return;
+                        if (typeof child === 'string' || typeof child === 'number') {
+                            node.appendChild(document.createTextNode(String(child)));
+                        } else {
+                            node.appendChild(child);
+                        }
+                    });
+                }
+                return node;
+            }
+
+            function handleSoldierSelect(name) {
+                const idx = state.selectedSoldiers.indexOf(name);
+                if (idx !== -1) {
+                    state.selectedSoldiers.splice(idx, 1);
+                } else if (state.selectedSoldiers.length < 3) {
+                    state.selectedSoldiers.push(name);
+                }
+                render();
+            }
+
+            function handleStartQuestions() {
+                if (state.selectedSoldiers.length >= 2) {
+                    state.gameState = 'questions';
+                    state.currentQuestion = 0;
+                    render();
+                }
+            }
+
+            function handleAnswerQuestion(value) {
+                state.answers[state.currentQuestion] = value;
+                if (state.currentQuestion < questions.length - 1) {
+                    state.currentQuestion += 1;
+                } else {
+                    analyzePlayer(state.answers);
+                    state.gameState = 'analysis';
+                }
+                render();
+            }
+
+            function analyzePlayer(playerAnswers) {
+                const profile = {
+                    traits: [],
+                    recommendation: '',
+                    canLeave: false,
+                    motivation: '',
+                    depth: 0
+                };
+
+                if (playerAnswers[0] === 'empath') {
+                    profile.traits.push('Емпат');
+                    profile.depth += 2;
+                } else if (playerAnswers[0] === 'balanced') {
+                    profile.traits.push('Збалансований лідер');
+                    profile.depth += 1;
+                } else {
+                    profile.traits.push('Авторитарний');
+                }
+
+                if (playerAnswers[1] === 'existential_crisis') {
+                    profile.traits.push('Шукає сенс');
+                    profile.depth += 3;
+                    profile.canLeave = true;
+                } else if (playerAnswers[1] === 'both_afraid') {
+                    profile.traits.push('Амбівалентний');
+                    profile.depth += 1;
+                }
+
+                if (playerAnswers[2] === 'creative') {
+                    profile.traits.push('Творець');
+                    profile.depth += 2;
+                    profile.motivation = 'Хочеш вирватись в творчість (фото/відео)';
+                } else if (playerAnswers[2] === 'introvert_thinker') {
+                    profile.traits.push('Философ');
+                    profile.depth += 2;
+                }
+
+                if (playerAnswers[3] === 'meaningless') {
+                    profile.traits.push('Скептик щодо армії');
+                    profile.canLeave = true;
+                    profile.depth += 2;
+                } else if (playerAnswers[3] === 'growth') {
+                    profile.traits.push('Прагне розвитку');
+                    profile.depth += 1;
+                }
+
+                if (profile.depth >= 6) {
+                    profile.recommendation = 'Артур, у тебе глибока натура. 12 років ти боротимешся з тим, що сьогодні вже усвідомлюєш: армія - це не твій шлях. Але ти воєш честі свої обіцянки.';
+                    profile.canLeave = true;
+                } else if (profile.depth >= 4) {
+                    profile.recommendation = 'Ти здатний служити, але щось у середині гніте. Це нормально. Потрібен час, щоб зрозуміти, який шлях твій.';
+                } else {
+                    profile.recommendation = 'Ти природжений воєнний або успішно себе переконав у цьому. Але запитай себе - це твій вибір чи примус?';
+                }
+
+                state.psychology = profile;
+            }
+
+            function renderIntro() {
+                return el('div', { class: 'container' }, [
+                    el('div', { class: 'header' }, [
+                        el('h1', { class: 'title', text: '⚔️ ВИХІД З АРМІЇ' }),
+                        el('p', { class: 'subtitle', text: 'Артур - твоя історія починається весною 2005' })
+                    ]),
+                    el('div', { class: 'card' }, [
+                        el('div', { class: 'year', text: '2005 рік, весна' }),
+                        el('div', { class: 'location', text: '95 БРИГАДА, КОСУХА' }),
+                        el('div', { class: 'narrative' }, [
+                            el('p', { text: 'Прапорщик Артур прибув до нової бригади. Новий призив. Нові люди.' }),
+                            el('p', { text: 'Перед ним стоїть вибір: кого обрати собі у команду? Хто йому поможе?' }),
+                            el('p', { text: 'Давай почнемо звідти...' })
+                        ]),
+                        el('button', {
+                            class: 'button-primary',
+                            text: 'РОЗПОЧАТИ → ВИБІР БІЙЦІВ',
+                            onclick: function () {
+                                state.gameState = 'chooseSoldiers';
+                                render();
+                            }
+                        })
+                    ]),
+                    el('div', { class: 'progress-bar' }, [
+                        el('div', { class: 'progress-fill', style: 'width: 33%' })
+                    ]),
+                    el('div', { class: 'level-text', text: 'РІВЕНЬ 1/3 - 2005' })
+                ]);
+            }
+
+            function renderChooseSoldiers() {
+                const grid = el('div', { class: 'soldiers-grid' },
+                    soldiers.map(function (soldier) {
+                        const isSelected = state.selectedSoldiers.indexOf(soldier.name) !== -1;
+                        const children = [
+                            el('div', { class: 'soldier-name', text: soldier.name }),
+                            el('div', { class: 'soldier-age', text: soldier.age + ' років' }),
+                            el('div', { class: 'soldier-desc', text: soldier.description })
+                        ];
+                        if (isSelected) {
+                            children.push(el('div', { class: 'checkmark', text: '✓' }));
+                        }
+                        return el('div', {
+                            class: 'soldier-card' + (isSelected ? ' selected' : ''),
+                            onclick: function () { handleSoldierSelect(soldier.name); }
+                        }, children);
+                    })
+                );
+
+                const selectedInfo = el('div', { class: 'selected-info' }, [
+                    'Обрано: ' + state.selectedSoldiers.length + '/3'
+                ]);
+                if (state.selectedSoldiers.length > 0) {
+                    selectedInfo.appendChild(
+                        el('div', { class: 'selected-list' },
+                            state.selectedSoldiers.map(function (name) {
+                                return el('span', { class: 'selected-tag', text: name });
+                            })
+                        )
+                    );
+                }
+
+                const canStart = state.selectedSoldiers.length >= 2;
+                const button = el('button', {
+                    class: 'button-primary',
+                    text: 'ДАЛІ → ПИТАННЯ (' + state.selectedSoldiers.length + '/2)',
+                    disabled: !canStart,
+                    onclick: handleStartQuestions
+                });
+
+                return el('div', { class: 'container' }, [
+                    el('div', { class: 'header' }, [
+                        el('h1', { class: 'title', text: 'ВИБІР КОМАНДИ' }),
+                        el('p', { class: 'subtitle', text: 'Обери собі 2-3 бійців для своєї команди' })
+                    ]),
+                    el('div', { class: 'card' }, [grid, selectedInfo, button])
+                ]);
+            }
+
+            function renderQuestions() {
+                const question = questions[state.currentQuestion];
+                const answers = el('div', { class: 'answers-container' },
+                    question.answers.map(function (answer) {
+                        return el('button', {
+                            class: 'answer-button',
+                            text: answer.text,
+                            onclick: function () { handleAnswerQuestion(answer.value); }
+                        });
+                    })
+                );
+
+                const progress = ((state.currentQuestion + 1) / questions.length) * 100;
+
+                return el('div', { class: 'container' }, [
+                    el('div', { class: 'header' }, [
+                        el('h1', { class: 'title', text: 'ПИТАННЯ ' + (state.currentQuestion + 1) + '/4' }),
+                        el('p', { class: 'subtitle', text: 'Артур, хто ти насправді?' })
+                    ]),
+                    el('div', { class: 'card' }, [
+                        el('div', { class: 'question-text', text: question.question }),
+                        answers
+                    ]),
+                    el('div', { class: 'progress-bar' }, [
+                        el('div', { class: 'progress-fill', style: 'width: ' + progress + '%' })
+                    ])
+                ]);
+            }
+
+            function renderAnalysis() {
+                const psychology = state.psychology;
+                if (!psychology) return el('div', { text: 'Loading...' });
+
+                const traitsBox = el('div', { class: 'traits-box' }, [
+                    el('div', { class: 'traits-title', text: 'Твої якості:' })
+                ]);
+                psychology.traits.forEach(function (trait) {
+                    traitsBox.appendChild(el('span', { class: 'trait-tag', text: trait }));
+                });
+
+                const cardChildren = [
+                    traitsBox,
+                    el('div', { class: 'recommendation-box' }, [
+                        el('div', { class: 'recommendation-title', text: '💭 Аналіз:' }),
+                        el('p', { class: 'recommendation-text', text: psychology.recommendation })
+                    ])
+                ];
+
+                if (psychology.motivation) {
+                    cardChildren.push(
+                        el('div', { class: 'motivation-box' }, [
+                            el('div', { class: 'motivation-title', text: '🎯 Твоя мотивація:' }),
+                            el('p', { class: 'motivation-text', text: psychology.motivation })
+                        ])
+                    );
+                }
+
+                const canLeaveMessage = psychology.canLeave
+                    ? el('p', { class: 'can-leave-yes', text: '⚠️ Артур, ти вже розумієш, що хочеш ВИЙТИ. Але це займе ще 12 років...' })
+                    : el('p', { class: 'can-leave-no', text: 'Ти все ще не впевнений. Служба дає тобі щось важливе.' });
+
+                cardChildren.push(el('div', { class: 'can-leave-box' }, [canLeaveMessage]));
+
+                return el('div', { class: 'container' }, [
+                    el('div', { class: 'header' }, [
+                        el('h1', { class: 'title', text: 'ТВІЙ ПСИХОЛОГІЧНИЙ ПОРТРЕТ' }),
+                        el('p', { class: 'subtitle', text: '2005 рік - що ти собою являєш' })
+                    ]),
+                    el('div', { class: 'card' }, cardChildren),
+                    el('button', {
+                        class: 'button-primary',
+                        text: 'ДАЛІ → РІВЕНЬ 2 (2009) - КІМНАТКА НА КОСУСЕ',
+                        onclick: function () {
+                            state.progress.level = 2;
+                            saveProgress();
+                            state.gameState = 'intro';
+                            state.selectedSoldiers = [];
+                            state.answers = {};
+                            state.currentQuestion = 0;
+                            state.psychology = null;
+                            render();
+                        }
+                    }),
+                    el('div', { class: 'progress-bar' }, [
+                        el('div', { class: 'progress-fill', style: 'width: 33%' })
+                    ]),
+                    el('div', { class: 'level-text', text: 'РІВЕНЬ 1/3 ЗАВЕРШЕНО ✓' })
+                ]);
+            }
+
+            function render() {
+                saveProgress();
+                const root = document.getElementById('root');
+                root.innerHTML = '';
+                let view;
+                switch (state.gameState) {
+                    case 'intro':
+                        view = renderIntro();
+                        break;
+                    case 'chooseSoldiers':
+                        view = renderChooseSoldiers();
+                        break;
+                    case 'questions':
+                        view = renderQuestions();
+                        break;
+                    case 'analysis':
+                        view = renderAnalysis();
+                        break;
+                    default:
+                        view = el('div', { text: 'Loading...' });
+                }
+                root.appendChild(view);
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', render);
+            } else {
+                render();
+            }
+        })();
+    </script>
+</body>
+</html>
