@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚔️ АРТУР: РОЗПАЛЕННЯ</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Georgia', serif; background: #0a0a1a; color: #e0e0e0; min-height: 100vh; padding: 2rem; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 3rem; }
+        .title { font-size: 56px; font-weight: 900; color: #4CAF50; margin-bottom: 1rem; text-shadow: 0 4px 20px rgba(76, 175, 80, 0.4); }
+        .subtitle { font-size: 24px; color: #888; margin-bottom: 2rem; font-style: italic; }
+        .content { background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(76, 175, 80, 0.05) 100%); border-left: 4px solid #4CAF50; padding: 3rem; border-radius: 12px; margin-bottom: 3rem; line-height: 1.9; font-size: 16px; }
+        .content p { margin-bottom: 1.5rem; }
+        .emphasis { color: #4CAF50; font-weight: 700; }
+        .password-box { background: #2a2a2a; border: 2px solid #4CAF50; padding: 2rem; border-radius: 12px; text-align: center; margin: 3rem 0; }
+        .password-label { font-size: 14px; color: #888; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 2px; }
+        .password-value { font-size: 72px; font-weight: 900; color: #4CAF50; font-family: 'Courier New'; letter-spacing: 8px; margin-bottom: 1rem; }
+        .instruction { font-size: 14px; color: #aaa; font-style: italic; }
+        .stats-box { background: rgba(76, 175, 80, 0.05); padding: 2rem; border-radius: 8px; margin: 2rem 0; }
+        .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+        .stat { background: #2a2a2a; padding: 1rem; border-radius: 6px; border-left: 3px solid #4CAF50; }
+        .stat-label { font-size: 12px; color: #888; text-transform: uppercase; margin-bottom: 0.5rem; }
+        .stat-value { font-size: 28px; font-weight: 700; color: #4CAF50; }
+        .button { background: #4CAF50; color: #fff; border: none; border-radius: 8px; padding: 1.5rem 2rem; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px; width: 100%; margin-top: 2rem; }
+        .button:hover { filter: brightness(1.1); transform: translateY(-3px); }
+        .incomplete { background: rgba(255, 111, 0, 0.1); border-left: 4px solid #FF6F00; }
+        .complete { background: rgba(76, 175, 80, 0.1); border-left: 4px solid #4CAF50; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">⚔️ АРТУР</div>
+            <div class="subtitle" id="subtitle">Розпалення Істини</div>
+        </div>
+
+        <div class="content" id="analysis-content">
+            <p id="analysis-text"></p>
+        </div>
+
+        <div class="stats-box" id="stats-box"></div>
+
+        <div id="password-section" class="password-box hidden">
+            <div class="password-label">🔓 КОД РОЗПАЛЕННЯ:</div>
+            <div class="password-value">95</div>
+            <div class="instruction">
+                Позвоніть Богданові й скажіть цей код.
+                <br/><br/>
+                Він розповість вам всю суть цієї гри.
+                <br/><br/>
+                "Дружба з тобою - знак правильного шляху"
+            </div>
+        </div>
+
+        <div id="incomplete-section" class="incomplete hidden">
+            <div style="padding: 2rem;">
+                <h2 style="color: #FF6F00; margin-bottom: 1rem;">⚠️ ГРА НЕ ПРОЙДЕНА</h2>
+                <p style="color: #aaa; margin-bottom: 1rem;">
+                    Артур, твої вибори привели тебе іншим шляхом.
+                    <br/><br/>
+                    Це не означає що ти помилився. Це означає що ти знайшов(ла) іншу доля.
+                    <br/><br/>
+                    Гра закінчена, але твоя історія продовжується.
+                </p>
+                <p style="color: #aaa;">
+                    Богдан розповість тобі про це коли ми поговоримо.
+                </p>
+            </div>
+        </div>
+
+        <button class="button" onclick="repeatGame()">ПРОЙТИ ЗАНОВО</button>
+    </div>
+
+    <script>
+        const ANALYSIS_TEMPLATES = {
+            army_final: {
+                title: "⚔️ ТИ - ВОЄННИЙ",
+                text: `Артур, твої 50 виборів від дитинства до 18 років привели тебе сюди.
+
+До АРМІЇ.
+
+Не тому що батько примушував.
+Не тому що мати просила.
+Не тому що Анна залишилась дома.
+
+А тому що ТВОЯ СУТНІСТЬ вела тебе туди.
+
+Дисципліна? 88%
+Емпатія? 78%
+Стабільність? 72%
+
+Ти йдеш в армію не від страху.
+Ти йдеш від СИЛИ.
+
+Від самого дитинства ти робив вибори які складали воєнну людину.
+Батько суворий - ти навчився дисципліні.
+Смерть друга - ти навчився цінувати честь.
+Розставання з Лізою - ти навчився жертвувати.
+
+Це був твій шлях. Не історія. ТВОЯ ДОЛЯ.
+
+А тепер ти в казармі. Першої ночі. Ліжко звичайне. Небо звичайне.
+
+Але ти ЗНАЄШ що це правильно.
+
+Позвоніть Богданові й скажіть КОД. Він чекає.`,
+                password: true
+            },
+            
+            artist: {
+                title: "🎨 ТИ - ТВОРЕЦЬ",
+                text: `Артур, твої вибори привели тебе в ІншЫЙ СВІТ.
+
+В світ де немає казарми.
+Де немає ремінця й дисципліни.
+Де є ФАРБИ й МУЗИКА й СЛОВА.
+
+Креативність? 86%
+Чутливість? 74%
+Відкритість? 82%
+
+Батько хотів воєнного.
+Але ТИ обрав художника.
+
+У рівні 1 ти малював сонце.
+У рівні 2 ти читав книги про витязів.
+У рівні 3 ти чув музику вночі.
+У рівні 4... ти не пішов в армію.
+
+Це не поразка. ЦЕ ПЕРЕМОГА.
+
+Ти став(ла) СВІДИЙ людиною.
+
+Твоя дитинство не привела до казарми.
+Твоя дитинство привела до СЕБЕ.
+
+Анна могла б тебе зрозуміти більше ніж армія.
+Матір могла б гордитися більше ніж батько.
+
+Гра закінчена. Але твоя історія ТІЛЬКИ ПОЧИНАЄТЬСЯ.`,
+                password: false
+            },
+            
+            engineer: {
+                title: "⚙️ ТИ - ІНЖЕНЕР",
+                text: `Артур, твої вибори привели тебе в світ ЛОГІКИ й НАУКИ.
+
+Дисципліна? 81%
+Креативність? 68%
+Розум? Високий
+
+Ти робив вибори які складали людину РОЗРАХУНКУ.
+Не армії. Не мистецтва. А МАЙБУТНЬОГО.
+
+Твоє дитинство було про навчання.
+Твоя школа була про науки.
+Твої 9 класів були про вибір серйозної професії.
+
+І на останньому крупку ти вибрав інженерію.
+
+Це мудро. Це потрібно.
+
+Але гра не пройдена. Тому що ты не пішов в армію.
+
+Батько чекав іншого. Матір розуміла.
+
+Твоя доля - створювати. Не руйнувати.
+Будувати. Не ламати.
+
+Гра закінчена.`,
+                password: false
+            },
+            
+            teacher: {
+                title: "📚 ТИ - ВЧИТЕЛЬ",
+                text: `Артур, твої вибори привели тебе до ЛЮДЕЙ.
+
+Емпатія? 82%
+Соціальність? 79%
+Дисципліна? 72%
+
+Ти робив вибори які показали НА ІНШОМУ.
+Когда друг був один - ти його приймав.
+Когда учень був проблемним - ти розумів його.
+Когда світ був важкий - ти помагав іншим.
+
+Ти став(ла) ВЧИТЕЛЕМ.
+
+Не в казармі. А в КЛАСІ.
+
+Твоя дитинство готувало тебе не до форми.
+А до того щоб змінити жизнь дітей.
+
+Це прекрасно. Це потрібно.
+
+Але гра не пройдена. Тому що ты не пішов в армію.
+
+Твоя доля - учити. Не командувати.`,
+                password: false
+            },
+            
+            depressed: {
+                title: "😢 ТИ - ТОТ ХТО СТРАЖДАВ",
+                text: `Артур, твої вибори привели тебе в темне місце.
+
+Стабільність? 38%
+Невротизм? 78%
+Депресія? Реальна
+
+Ти робив вибори які показали БІЛЬ.
+Смерть друга - ти не оправився.
+Розставання - ти зламався.
+Батьківський тиск - ти не витримав.
+
+І на останньому крупку ти сказав(ла):
+"Я не знаю що робити."
+
+Це правда. Ти НЕ знаєш.
+
+Гра закінчена. Але твоя історія ЩЕ ПОЧАЛАСЬ.
+
+Тому що найголовніше - це понять що тобі потрібна допомога.
+
+І це OK. Це нормально.
+
+Богдан розповість тобі про це коли ми поговоримо.`,
+                password: false
+            }
+        };
+
+        function determineEnding() {
+            const password = localStorage.getItem('artur_password');
+            const stats = JSON.parse(localStorage.getItem('artur_stats') || '{}');
+            const flags = JSON.parse(localStorage.getItem('artur_flags') || '{}');
+
+            if (password === '95') {
+                return ANALYSIS_TEMPLATES.army_final;
+            }
+
+            if (stats.openness > 80 && stats.conscientiousness < 65) {
+                return ANALYSIS_TEMPLATES.artist;
+            }
+
+            if (stats.conscientiousness > 80 && stats.openness > 75) {
+                return ANALYSIS_TEMPLATES.engineer;
+            }
+
+            if (stats.agreeableness > 80 && stats.extraversion > 75) {
+                return ANALYSIS_TEMPLATES.teacher;
+            }
+
+            if (stats.neuroticism > 75) {
+                return ANALYSIS_TEMPLATES.depressed;
+            }
+
+            return ANALYSIS_TEMPLATES.artist;
+        }
+
+        function renderAnalysis() {
+            const ending = determineEnding();
+            const stats = JSON.parse(localStorage.getItem('artur_stats') || '{}');
+            const password = localStorage.getItem('artur_password');
+
+            document.getElementById('subtitle').textContent = ending.title;
+            document.getElementById('analysis-text').textContent = ending.text;
+
+            const statsHTML = `
+                <div class="stat-row">
+                    <div class="stat">
+                        <div class="stat-label">Креативність</div>
+                        <div class="stat-value">${stats.openness || 50}%</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Дисципліна</div>
+                        <div class="stat-value">${stats.conscientiousness || 50}%</div>
+                    </div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat">
+                        <div class="stat-label">Соціальність</div>
+                        <div class="stat-value">${stats.extraversion || 50}%</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Емпатія</div>
+                        <div class="stat-value">${stats.agreeableness || 50}%</div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('stats-box').innerHTML = statsHTML;
+
+            if (password === '95') {
+                document.getElementById('password-section').classList.remove('hidden');
+                document.getElementById('incomplete-section').classList.add('hidden');
+            } else {
+                document.getElementById('password-section').classList.add('hidden');
+                document.getElementById('incomplete-section').classList.remove('hidden');
+            }
+        }
+
+        function repeatGame() {
+            localStorage.clear();
+            window.location.href = 'index.html';
+        }
+
+        window.addEventListener('load', renderAnalysis);
+    </script>
+</body>
+</html>
