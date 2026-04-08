@@ -8,7 +8,7 @@
       "age": 18,
       "emoji": "🎓",
       "scene": "Школа. Останній день.",
-      "question": "Це останній день. Батьки гордий. Матір плаче. 'Ти дорослий тепер.'",
+      "question": "Це останній день. Батько гордий. Матір плаче. 'Ти дорослий тепер.'",
       "options": [
         { "emoji": "🎓", "text": "Подякувати й сказати рішення прийнято", "stats": { "agreeableness": 8, "conscientiousness": 8 } },
         { "emoji": "😔", "text": "Відчути вагу світу", "stats": { "neuroticism": 7, "openness": 6 } },
@@ -18,12 +18,12 @@
     {
       "age": 18,
       "emoji": "👨",
-      "scene": "Дома. Кабінет батька. Останній розговір.",
+      "scene": "Дома. Кабінет батька. Остання розмова.",
       "question": "Батько: 'Я бачив твої вибори. Армія чекає. Це честь служити.'",
       "options": [
-        { "emoji": "⚔️", "text": "Сказати ДА й обіцяти служити", "stats": { "conscientiousness": 9, "agreeableness": 8 }, "flags": { "army_chosen": true } },
+        { "emoji": "⚔️", "text": "Сказати ТАК й обіцяти служити", "stats": { "conscientiousness": 9, "agreeableness": 8 }, "flags": { "army_chosen": true } },
         { "emoji": "😔", "text": "Сказати не знаєш", "stats": { "neuroticism": 8, "conscientiousness": 5 } },
-        { "emoji": "❌", "text": "Сказати НІ й піти своїм путём", "stats": { "extraversion": 8, "conscientiousness": -6 }, "flags": { "reject_father": true } }
+        { "emoji": "❌", "text": "Сказати НІ й піти своїм шляхом", "stats": { "extraversion": 8, "conscientiousness": -6 }, "flags": { "reject_father": true } }
       ]
     },
     {
@@ -52,7 +52,7 @@
       "age": 18,
       "emoji": "🚌",
       "scene": "Вокзал. Ранок. Автобус.",
-      "question": "Батько ведеть. Матір платить. Анна дивиться услід. Дитинство виходить за дверима.",
+      "question": "Батько веде. Матір плаче. Анна дивиться услід. Дитинство виходить за двері.",
       "options": [
         { "emoji": "👋", "text": "Дивитися назад й помахати", "stats": { "agreeableness": 8, "conscientiousness": 8 }, "flags": { "nostalgic": true } },
         { "emoji": "👀", "text": "Дивитися вперед й не назад", "stats": { "conscientiousness": 9, "extraversion": 7 }, "flags": { "focused": true } },
@@ -74,9 +74,9 @@
       "age": 18,
       "emoji": "⚔️",
       "scene": "Казарма. Ніч першого дня. Ліжко.",
-      "question": "Ти лежиш. Дитинство позаду. 50 виборів привели сюди. ОСТАННІЙ ВИБІР:",
+      "question": "Ти лежиш. Дитинство позаду. 49 виборів привели сюди. ОСТАННІЙ ВИБІР:",
       "options": [
-        { "emoji": "⚔️", "text": "ДА! ПОЗВОНІТЬ БОГДАНОВІ!", "stats": { "conscientiousness": 10, "agreeableness": 8 }, "flags": { "army_final": true }, "password": 95 },
+        { "emoji": "⚔️", "text": "ТАК! ЗАТЕЛЕФОНУЙТЕ БОГДАНУ!", "stats": { "conscientiousness": 10, "agreeableness": 8 }, "flags": { "army_final": true }, "password": 95 },
         { "emoji": "😔", "text": "Я помилився. Не маю бути.", "stats": { "neuroticism": 9, "conscientiousness": -5 }, "flags": { "army_regret": true } },
         { "emoji": "🚀", "text": "Я не знаю що робити.", "stats": { "neuroticism": 8, "openness": 8 }, "flags": { "army_confused": true } }
       ]
