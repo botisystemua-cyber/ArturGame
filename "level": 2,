@@ -1,0 +1,151 @@
+{
+  "level": 2,
+  "name": "Школа",
+  "age_range": "7-11 років",
+  "color": "#2196F3",
+  "questions": [
+    {
+      "age": 7,
+      "emoji": "📚",
+      "scene": "Перший клас. Цифри на дошці.",
+      "question": "Вчителька: 'Артур, яка перша буква твого імені?'",
+      "options": [
+        { "emoji": "✋", "text": "Піднести руку й правильно відповісти", "stats": { "conscientiousness": 7, "extraversion": 6 } },
+        { "emoji": "😶", "text": "Мовчати й бути невидимим", "stats": { "neuroticism": 5, "conscientiousness": 4 } },
+        { "emoji": "🤪", "text": "Сказати щось дивне й розважити клас", "stats": { "extraversion": 8, "openness": 7 } }
+      ]
+    },
+    {
+      "age": 8,
+      "emoji": "👊",
+      "scene": "Подвір'я школи. Булінг.",
+      "question": "Старший хлопець: 'Хей, мале! Чому ти такий дивний?'",
+      "options": [
+        { "emoji": "😢", "text": "Плакати й бігти до вчителя", "stats": { "neuroticism": 8, "agreeableness": 5 }, "flags": { "bullied": true } },
+        { "emoji": "💪", "text": "Сказати йому щось різко й піти", "stats": { "extraversion": 8, "conscientiousness": -3 }, "flags": { "defiant": true } },
+        { "emoji": "🤐", "text": "Мовчати й уникати його дорогу", "stats": { "neuroticism": 6, "openness": -3 }, "flags": { "avoidant": true } }
+      ]
+    },
+    {
+      "age": 8,
+      "emoji": "🤝",
+      "scene": "Дитячий парк. Новий хлопець.",
+      "question": "Максим: 'Хай! Ти хочеш грати?'",
+      "options": [
+        { "emoji": "🤝", "text": "Так! Гратися й стати друзями", "stats": { "agreeableness": 8, "extraversion": 8 }, "flags": { "has_friend": true } },
+        { "emoji": "😶", "text": "Ні, спасибі. Я хочу сам", "stats": { "extraversion": -5, "conscientiousness": 6 } },
+        { "emoji": "❓", "text": "Питати його про щось перше", "stats": { "openness": 7, "conscientiousness": 5 } }
+      ]
+    },
+    {
+      "age": 9,
+      "emoji": "❌",
+      "scene": "Класна кімнатка. Перша оцінка 2.",
+      "question": "Вчителька: 'Артур, ти можеш краще.' Батько сказав: 'Тільки оцінки вище 4!'",
+      "options": [
+        { "emoji": "😔", "text": "Плакати й обіцяти краще учитися", "stats": { "neuroticism": 7, "conscientiousness": 8 }, "flags": { "academic_pressure": true } },
+        { "emoji": "😠", "text": "Сказати вчителеві що вона несправедлива", "stats": { "extraversion": 7, "openness": 6 }, "flags": { "defiant_authority": true } },
+        { "emoji": "💪", "text": "Вирішити самому й учити більше", "stats": { "conscientiousness": 9, "openness": 4 } }
+      ]
+    },
+    {
+      "age": 9,
+      "emoji": "😍",
+      "scene": "На уроці. Дівчинка перед тобою.",
+      "question": "Ліза сидить перед тобою. Довге русе волосся. Коли посміхається...?",
+      "options": [
+        { "emoji": "😍", "text": "Дивитися й мріяти", "stats": { "openness": 8, "neuroticism": 4 }, "flags": { "first_crush": true } },
+        { "emoji": "❌", "text": "Ігнорувати й сконцентруватися", "stats": { "conscientiousness": 8, "openness": -3 } },
+        { "emoji": "😳", "text": "Спробувати з'ясуватися з нею", "stats": { "extraversion": 8, "neuroticism": 6 } }
+      ]
+    },
+    {
+      "age": 9,
+      "emoji": "⚠️",
+      "scene": "Класна кімнатка. Вчитель несправедлив.",
+      "question": "Вчитель: 'За що?!' - 'Сідай й молчи.'",
+      "options": [
+        { "emoji": "😢", "text": "Плакати й слухатися", "stats": { "agreeableness": 8, "neuroticism": 6 }, "flags": { "submissive": true } },
+        { "emoji": "⚡", "text": "Кричати й вийти з класу", "stats": { "extraversion": 8, "conscientiousness": -5 }, "flags": { "rebellious_authority": true } },
+        { "emoji": "🤐", "text": "Молчати й обурюватися в собі", "stats": { "neuroticism": 7, "openness": -2 }, "flags": { "resentful": true } }
+      ]
+    },
+    {
+      "age": 10,
+      "emoji": "🏆",
+      "scene": "Спортзал. Легкоатлетичне змагання.",
+      "question": "Ти побігаєш швидче за всіх! КІНЧ! Ти перший!",
+      "options": [
+        { "emoji": "🏆", "text": "Радіти й хотіти змаганнях", "stats": { "extraversion": 8, "conscientiousness": 8 }, "flags": { "athletic": true } },
+        { "emoji": "😳", "text": "Соромиться від уваги й піти", "stats": { "neuroticism": 6, "extraversion": -5 } },
+        { "emoji": "⚡", "text": "Хвалити себе й кинути виклик", "stats": { "extraversion": 9, "conscientiousness": -4 } }
+      ]
+    },
+    {
+      "age": 10,
+      "emoji": "💔",
+      "scene": "Подвір'я школи. Максим грає з іншими.",
+      "question": "Максим: 'Артур, ми тобі не підходимо'",
+      "options": [
+        { "emoji": "😢", "text": "Плакати й замкнутися в собі", "stats": { "neuroticism": 8, "agreeableness": 5 }, "flags": { "trust_broken": true } },
+        { "emoji": "⚡", "text": "Сказати йому щось обридливе", "stats": { "extraversion": 7, "openness": 6 }, "flags": { "hurt_angry": true } },
+        { "emoji": "😔", "text": "Просто піти й ніколи не говорити", "stats": { "neuroticism": 7, "extraversion": -5 }, "flags": { "withdrawn": true } }
+      ]
+    },
+    {
+      "age": 11,
+      "emoji": "❤️",
+      "scene": "Батьківський дім. Батько й матір близько.",
+      "question": "Батько: 'Артур, пам'ятай. Сім'я - найважливіше. Я хотів вибачити.'",
+      "options": [
+        { "emoji": "❤️", "text": "Обнімати їх й радіти", "stats": { "agreeableness": 8, "openness": 7 }, "flags": { "family_healed": true } },
+        { "emoji": "😳", "text": "Бути смущеним і йти", "stats": { "neuroticism": 5, "openness": -4 } },
+        { "emoji": "🤔", "text": "Питати їх про то що було", "stats": { "openness": 8, "conscientiousness": 6 } }
+      ]
+    },
+    {
+      "age": 11,
+      "emoji": "📖",
+      "scene": "Бібліотека школи. Вчителька показує книгу.",
+      "question": "'Артур, я думаю цю книгу ти полюбиш'. Пригода. Витязь у замку...",
+      "options": [
+        { "emoji": "📖", "text": "Зачитатися й читати до кінця", "stats": { "openness": 8, "conscientiousness": 7 }, "flags": { "bookworm": true } },
+        { "emoji": "😑", "text": "Прочитати кілька сторінок й кинути", "stats": { "conscientiousness": -3, "openness": -4 } },
+        { "emoji": "✋", "text": "Запитати чи можна читати про крим", "stats": { "openness": 6, "conscientiousness": 5 } }
+      ]
+    },
+    {
+      "age": 11,
+      "emoji": "🎵",
+      "scene": "Музична кімнатка. Тренер чекає.",
+      "question": "Вчитель: 'Співай в хорі?' Тренер: 'Команді потрібен ти!'",
+      "options": [
+        { "emoji": "🎵", "text": "Обрати музику й хор", "stats": { "openness": 8, "agreeableness": 6 }, "flags": { "musical": true } },
+        { "emoji": "⚽", "text": "Обрати спорт й команду", "stats": { "extraversion": 8, "conscientiousness": 7 }, "flags": { "athlete": true } },
+        { "emoji": "😔", "text": "Не вибирати й залишитися один", "stats": { "neuroticism": 6, "conscientiousness": -4 } }
+      ]
+    },
+    {
+      "age": 11,
+      "emoji": "🚀",
+      "scene": "Нова школа. Батько переводить тебе.",
+      "question": "Батько: 'Більш серйозна школа.' Новий клас. Нові діти.",
+      "options": [
+        { "emoji": "🚀", "text": "Кинутися вперед й адаптуватися", "stats": { "extraversion": 8, "conscientiousness": 7 } },
+        { "emoji": "😢", "text": "Плакати й хотіти старої школи", "stats": { "neuroticism": 8, "agreeableness": 6 } },
+        { "emoji": "📚", "text": "Сконцентруватися на навчанні", "stats": { "conscientiousness": 9, "extraversion": -4 } }
+      ]
+    },
+    {
+      "age": 12,
+      "emoji": "⚔️",
+      "scene": "Батьківський кабінет. Серйозна розмова.",
+      "question": "Батько: 'Коли ти буде старшим, служба Україні - це честь.'",
+      "options": [
+        { "emoji": "⚔️", "text": "Слухати й думати про армію", "stats": { "conscientiousness": 7, "openness": 6 }, "flags": { "aware_army": true } },
+        { "emoji": "😔", "text": "Бути сумним й спитати чому", "stats": { "neuroticism": 6, "openness": 7 } },
+        { "emoji": "⚡", "text": "Сказати батькові що не хочу", "stats": { "extraversion": 7, "conscientiousness": -5 }, "flags": { "reject_army": true } }
+      ]
+    }
+  ]
+}
