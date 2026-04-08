@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚔️ АРТУР</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { --color: #d4a574; }
+        body { font-family: 'Georgia', serif; background: #0a0a1a; color: #e0e0e0; min-height: 100vh; }
+        .container { max-width: 950px; margin: 0 auto; padding: 2rem; }
+        .header { text-align: center; margin-bottom: 2rem; }
+        .header-age { font-size: 13px; color: #888; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; }
+        .header-title { font-size: 48px; font-weight: 700; color: var(--color); margin-bottom: 0.5rem; }
+        .header-location { font-size: 16px; color: #aaa; font-style: italic; }
+        .progress { text-align: center; font-size: 12px; color: #666; margin-bottom: 2rem; }
+        .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .stat { background: rgba(var(--color-rgb), 0.1); border-left: 3px solid var(--color); padding: 1rem; border-radius: 6px; text-align: center; }
+        .stat-label { font-size: 10px; color: #888; text-transform: uppercase; margin-bottom: 0.5rem; }
+        .stat-value { font-size: 22px; font-weight: 700; color: var(--color); }
+        .scene-box { background: linear-gradient(135deg, rgba(var(--color-rgb), 0.08) 0%, rgba(var(--color-rgb), 0.02) 100%); border-left: 4px solid var(--color); padding: 2.5rem; border-radius: 8px; margin-bottom: 2rem; line-height: 1.9; font-size: 16px; }
+        .scene-text { color: #d0d0d0; margin-bottom: 1rem; }
+        .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+        @media (max-width: 768px) { .choices { grid-template-columns: 1fr; } }
+        .choice { background: #1a1a2e; border: 2px solid #444; border-radius: 10px; padding: 1.5rem; cursor: pointer; transition: all 0.3s; }
+        .choice:hover { border-color: var(--color); transform: translateY(-4px); box-shadow: 0 8px 20px rgba(var(--color-rgb), 0.2); }
+        .choice.selected { border-color: var(--color); background: rgba(var(--color-rgb), 0.15); }
+        .choice-emoji { font-size: 32px; display: block; margin-bottom: 0.75rem; }
+        .choice-text { font-size: 14px; color: #aaa; line-height: 1.5; }
+        .button { background: var(--color); color: #0a0a1a; border: none; border-radius: 8px; padding: 1rem 2rem; font-size: 14px; font-weight: 700; cursor: pointer; width: 100%; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; }
+        .button:hover:not(:disabled) { filter: brightness(1.1); transform: translateY(-2px); }
+        .button:disabled { opacity: 0.5; cursor: not-allowed; }
+        .hidden { display: none; }
+        .ending { text-align: center; padding: 4rem 2rem; }
+        .ending-emoji { font-size: 100px; margin-bottom: 2rem; }
+        .ending-title { font-size: 40px; font-weight: 700; color: var(--color); margin-bottom: 2rem; }
+        .ending-text { font-size: 16px; line-height: 1.8; color: #aaa; max-width: 700px; margin: 0 auto 3rem; }
+        .ending-btn { background: linear-gradient(135deg, var(--color) 0%, var(--color-dark) 100%); color: #fff; border: none; border-radius: 8px; padding: 1.5rem 3rem; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 2rem; text-transform: uppercase; letter-spacing: 1px; }
+        .ending-btn:hover { filter: brightness(1.1); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="game-screen">
+            <div class="header">
+                <div class="header-age" id="age"></div>
+                <div class="header-title" id="title"></div>
+                <div class="header-location" id="location"></div>
+            </div>
+
+            <div class="progress" id="progress"></div>
+            <div class="stats" id="stats"></div>
+
+            <div class="scene-box">
+                <div class="scene-text" id="narration"></div>
+            </div>
+
+            <div class="choices" id="choices"></div>
+            <button class="button" id="next-btn" onclick="nextScene()" disabled>ДАЛІ →</button>
+        </div>
+
+        <div id="ending-screen" class="hidden">
+            <div class="ending">
+                <div class="ending-emoji" id="end-emoji">🌱</div>
+                <div class="ending-title" id="end-title"></div>
+                <div class="ending-text" id="end-text"></div>
+                <button class="ending-btn" onclick="goNext()">ПРОДОВЖИТИ →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const GameState = {
+            level: 1,
+            questionIndex: 0,
+            stats: { openness: 50, conscientiousness: 50, extraversion: 50, agreeableness: 50, neuroticism: 50 },
+            flags: {},
+            password: null,
+            scenarios: [],
+            selectedChoice: null
+        };
+
+        const levelColors = {
+            1: { color: '#d4a574', rgb: '212,165,116' },
+            2: { color: '#2196F3', rgb: '33,150,243' },
+            3: { color: '#FF6F00', rgb: '255,111,0' },
+            4: { color: '#4CAF50', rgb: '76,175,80' }
+        };
+
+        async function init() {
+            const params = new URLSearchParams(window.location.search);
+            GameState.level = parseInt(params.get('level')) || 1;
+            const col = levelColors[GameState.level];
+            document.documentElement.style.setProperty('--color', col.color);
+            document.documentElement.style.setProperty('--color-rgb', col.rgb);
+            document.documentElement.style.setProperty('--color-dark', col.dark || '#000');
+            
+            await loadScenarios();
+            renderScene();
+        }
+
+        async function loadScenarios() {
+            try {
+                const response = await fetch(`level${GameState.level}.json`);
+                const data = await response.json();
+                GameState.scenarios = data.questions;
+            } catch (e) {
+                console.error('Помилка:', e);
+            }
+        }
+
+        function renderScene() {
+            if (GameState.questionIndex >= GameState.scenarios.length) {
+                finishLevel();
+                return;
+            }
+
+            const q = GameState.scenarios[GameState.questionIndex];
+            document.getElementById('age').textContent = `${q.age} років`;
+            document.getElementById('title').textContent = q.title;
+            document.getElementById('location').textContent = q.location;
+            document.getElementById('narration').textContent = q.question;
+            document.getElementById('progress').textContent = `Сцена ${GameState.questionIndex + 1}/${GameState.scenarios.length}`;
+            
+            updateStats();
+            renderChoices(q);
+            GameState.selectedChoice = null;
+            document.getElementById('next-btn').disabled = true;
+        }
+
+        function renderChoices(q) {
+            const container = document.getElementById('choices');
+            container.innerHTML = '';
+            q.options.forEach((opt, i) => {
+                const div = document.createElement('div');
+                div.className = 'choice';
+                div.innerHTML = `<div class="choice-emoji">${opt.emoji}</div><div class="choice-text">${opt.text}</div>`;
+                div.onclick = () => selectChoice(i, opt);
+                container.appendChild(div);
+            });
+        }
+
+        function selectChoice(idx, opt) {
+            GameState.selectedChoice = idx;
+            document.querySelectorAll('.choice').forEach((el, i) => {
+                el.classList.toggle('selected', i === idx);
+            });
+            
+            Object.keys(opt.stats || {}).forEach(s => {
+                GameState.stats[s] = Math.max(0, Math.min(100, GameState.stats[s] + opt.stats[s]));
+            });
+            
+            if (opt.flags) Object.assign(GameState.flags, opt.flags);
+            if (opt.password) GameState.password = opt.password;
+            
+            updateStats();
+            document.getElementById('next-btn').disabled = false;
+        }
+
+        function updateStats() {
+            const html = `
+                <div class="stat"><div class="stat-label">Креативність</div><div class="stat-value">${GameState.stats.openness}</div></div>
+                <div class="stat"><div class="stat-label">Дисципліна</div><div class="stat-value">${GameState.stats.conscientiousness}</div></div>
+                <div class="stat"><div class="stat-label">Соціальність</div><div class="stat-value">${GameState.stats.extraversion}</div></div>
+                <div class="stat"><div class="stat-label">Емпатія</div><div class="stat-value">${GameState.stats.agreeableness}</div></div>
+                <div class="stat"><div class="stat-label">Стабільність</div><div class="stat-value">${100 - GameState.stats.neuroticism}</div></div>
+            `;
+            document.getElementById('stats').innerHTML = html;
+        }
+
+        function nextScene() {
+            GameState.questionIndex++;
+            if (GameState.questionIndex < GameState.scenarios.length) {
+                renderScene();
+            } else {
+                finishLevel();
+            }
+        }
+
+        function finishLevel() {
+            localStorage.setItem('artur_stats', JSON.stringify(GameState.stats));
+            localStorage.setItem('artur_flags', JSON.stringify(GameState.flags));
+            if (GameState.password) localStorage.setItem('artur_password', GameState.password);
+            
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('ending-screen').classList.remove('hidden');
+            
+            const levels = ['🌱', '🎓', '👦', '⚔️'];
+            const titles = ['Дитинство пройдено', 'Школа пройдена', '9 класів пройдено', 'Казарма. Перша ніч.'];
+            const texts = [
+                'Ти виріс. Роки пройшли швидко. Перед тобою - нова частина.',
+                'Дитинство позаду. Тепер - серйозний світ. Перед тобою - вибір.',
+                'Ти не дитина. Ти не дорослий. Ти - на розпутті. І розпутті вибір.',
+                'Дитинство закінчилось. Батько позаду. Матір позаду. Анна позаду. Тепер - тільки ти й Україна.'
+            ];
+            
+            document.getElementById('end-emoji').textContent = levels[GameState.level - 1];
+            document.getElementById('end-title').textContent = titles[GameState.level - 1];
+            document.getElementById('end-text').textContent = texts[GameState.level - 1];
+        }
+
+        function goNext() {
+            if (GameState.level < 4) {
+                window.location.href = `game.html?level=${GameState.level + 1}`;
+            } else {
+                window.location.href = 'analysis.html';
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>
