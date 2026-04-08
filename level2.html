@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚔️ АРТУР: ШКОЛА (7-11)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            color: #ccc;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .container { max-width: 800px; margin: 0 auto; padding: 1rem; }
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #2196F3 0%, #1565C0 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            color: #fff;
+        }
+        .title { font-size: 28px; font-weight: 700; margin-bottom: 0.5rem; }
+        .subtitle { font-size: 14px; opacity: 0.9; }
+        .progress-container { margin-bottom: 2rem; }
+        .progress-bar {
+            height: 8px;
+            background: #2a2a2a;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+        .progress-fill { height: 100%; background: #2196F3; transition: width 0.3s; }
+        .progress-text { font-size: 12px; color: #888; }
+        .card {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        .image-section {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .emoji-large {
+            font-size: 120px;
+            line-height: 1;
+            margin-bottom: 1rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+        .age-display {
+            background: #2a2a2a;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        .age-label { font-size: 12px; color: #888; text-transform: uppercase; margin-bottom: 0.5rem; }
+        .age-text { font-size: 20px; font-weight: 700; color: #2196F3; }
+        .scene-description {
+            background: rgba(33, 150, 243, 0.1);
+            border-left: 3px solid #2196F3;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #aaa;
+        }
+        .question-box {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        .question-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: #f0f0f0;
+            margin-bottom: 1.5rem;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .option {
+            background: #1a1a1a;
+            border: 2px solid #444;
+            border-radius: 8px;
+            padding: 1.25rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            color: #ccc;
+            line-height: 1.6;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .option:hover {
+            border-color: #2196F3;
+            background: #222;
+            transform: translateX(8px);
+        }
+        .option.selected {
+            border-color: #2196F3;
+            background: rgba(33, 150, 243, 0.2);
+            color: #2196F3;
+            font-weight: 600;
+        }
+        .option-emoji {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        .option-text { flex: 1; }
+        .button {
+            background: #2196F3;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 1rem 2rem;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        .button:hover:not(:disabled) {
+            background: #1976D2;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(33, 150, 243, 0.3);
+        }
+        .button:disabled { opacity: 0.5; cursor: not-allowed; }
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat {
+            background: #2a2a2a;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid #2196F3;
+            text-align: center;
+        }
+        .stat-name { font-size: 11px; color: #888; text-transform: uppercase; margin-bottom: 0.5rem; }
+        .stat-value { font-size: 20px; font-weight: 700; color: #2196F3; }
+        .stat-bar {
+            background: #1a1a1a;
+            height: 4px;
+            border-radius: 2px;
+            margin-top: 0.75rem;
+            overflow: hidden;
+        }
+        .stat-bar-fill { height: 100%; background: #2196F3; border-radius: 2px; }
+        .hidden { display: none; }
+        .ending { text-align: center; padding: 2rem 0; }
+        .ending-title { font-size: 32px; font-weight: 700; color: #2196F3; margin-bottom: 1rem; }
+        .ending-text { font-size: 16px; line-height: 1.8; color: #aaa; margin-bottom: 2rem; }
+        .ending-emoji { font-size: 80px; margin-bottom: 1rem; animation: bounce 1s ease-in-out infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="game-screen">
+            <div class="header">
+                <h1 class="title">🎓 АРТУР: ШКОЛА</h1>
+                <p class="subtitle">7-11 років: перші товариші й вчителі</p>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill" style="width: 5%;"></div>
+                </div>
+                <div class="progress-text" id="progress-text">Питання 1/20</div>
+            </div>
+
+            <div class="stats" id="stats-container"></div>
+
+            <div class="card">
+                <div class="image-section">
+                    <div class="emoji-large" id="scene-emoji">📚</div>
+                </div>
+
+                <div class="age-display">
+                    <div class="age-label">ВІК</div>
+                    <div class="age-text" id="age-display">7 років</div>
+                </div>
+
+                <div class="scene-description" id="scene-description">
+                    Перший день в школі. Новий світ чекає...
+                </div>
+
+                <div class="question-box">
+                    <div class="question-text" id="question-text"></div>
+                    <div class="options" id="options-container"></div>
+                </div>
+
+                <button class="button" id="next-btn" onclick="nextQuestion()" disabled>ДАЛІ →</button>
+            </div>
+        </div>
+
+        <div id="ending-screen" class="hidden">
+            <div class="header">
+                <h1 class="title">🎓 АРТУР: ШКОЛА</h1>
+                <p class="subtitle">Рівень 2 завершено</p>
+            </div>
+
+            <div class="card">
+                <div class="ending">
+                    <div class="ending-emoji">🌟</div>
+                    <div class="ending-title">Школа позаду</div>
+                    <div class="ending-text" id="ending-text"></div>
+                    <button class="button" onclick="goToTeenYears()" style="background: #FF9800; margin-top: 1rem;">9 КЛАСІВ → РІВЕНЬ 3</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                age: 8,
+                emoji: '📚',
+                scene: 'Класна кімната. Перша оцінка за твір...',
+                q: 'В школі ти був...?',
+                opts: [
+                    { emoji: '⭐', text: 'Одним з кращих учнів', stats: { conscientiousness: 8 } },
+                    { emoji: '🤷', text: 'Середнім учнем', stats: { conscientiousness: 4 } },
+                    { emoji: '📉', text: 'Погано вчився, часто вставав з місця', stats: { conscientiousness: -5, neuroticism: 4 } }
+                ]
+            },
+            {
+                age: 9,
+                emoji: '👫',
+                scene: 'Подвір\'я школи. Діти грають в групах...',
+                q: 'У тебе в школі було...?',
+                opts: [
+                    { emoji: '💚', text: 'Один найкращий друг на все життя', stats: { agreeableness: 8 } },
+                    { emoji: '🌟', text: 'Багато друзів, я був популярний', stats: { extraversion: 9 } },
+                    { emoji: '🤝', text: 'Коло однолітків, із якими спілкувався', stats: { agreeableness: 6 } }
+                ]
+            },
+            {
+                age: 8,
+                emoji: '😔',
+                scene: 'Учитель повертає дневник з червоною оцінкою...',
+                q: 'Коли учитель критикував тебе, ти...?',
+                opts: [
+                    { emoji: '😢', text: 'Переживав і плакав', stats: { neuroticism: 7 } },
+                    { emoji: '💪', text: 'Сердився, але прислухався до порад', stats: { conscientiousness: 6 } },
+                    { emoji: '😎', text: 'Ігнорував критику й робив по-своєму', stats: { extraversion: 6 } }
+                ]
+            },
+            {
+                age: 9,
+                emoji: '🧮',
+                scene: 'Дошка з прикладами математики...',
+                q: 'Улюблений предмет в школі...?',
+                opts: [
+                    { emoji: '🔢', text: 'Математика / точні науки', stats: { conscientiousness: 7 } },
+                    { emoji: '📖', text: 'Мова / гуманітарні предмети', stats: { openness: 8 } },
+                    { emoji: '⚽', text: 'Фізкультура / спорт / рухливі предмети', stats: { extraversion: 7 } }
+                ]
+            },
+            {
+                age: 10,
+                emoji: '😠',
+                scene: 'Дворик школи. Більші хлопці сміються з тебе...',
+                q: 'Булінг у школі (насмішки однолітків)...?',
+                opts: [
+                    { emoji: '💔', text: 'Так, мене часто дражнили й висміювали', stats: { neuroticism: 8 } },
+                    { emoji: '🤐', text: 'Деякі випадки, але не часто', stats: { neuroticism: 3 } },
+                    { emoji: '😎', text: 'Ні, мене всі любили й поважали', stats: { extraversion: 8 } }
+                ]
+            },
+            {
+                age: 9,
+                emoji: '💕',
+                scene: 'Ти побачив(а) ту дівчину/того хлопця вперше...',
+                q: 'Перша закоханість у школі...?',
+                opts: [
+                    { emoji: '😍', text: 'Було дуже рано, у 2-3 класі', stats: { openness: 7, agreeableness: 5 } },
+                    { emoji: '🤷', text: 'Було, але пізніше, у 4-5 класі', stats: { agreeableness: 6 } },
+                    { emoji: '🤐', text: 'Я не замислювався про це', stats: { conscientiousness: 6 } }
+                ]
+            },
+            {
+                age: 8,
+                emoji: '🎮',
+                scene: 'Перерва. Всі граються, а ти...?',
+                q: 'На перерві ти...?',
+                opts: [
+                    { emoji: '🎯', text: 'Грав активно з друзями, був в центрі подій', stats: { extraversion: 8 } },
+                    { emoji: '📚', text: 'Сидів з книжкою чи один в сторонці', stats: { openness: 6, conscientiousness: 5 } },
+                    { emoji: '⚡', text: 'Шукав неприємностей, робив гнівних дорослих', stats: { extraversion: 6, neuroticism: 5 } }
+                ]
+            },
+            {
+                age: 10,
+                emoji: '🏠',
+                scene: 'Вечеря. Батьки питають про школу...',
+                q: 'Дома про школу ти розповідав...?',
+                opts: [
+                    { emoji: '🗣️', text: 'Детально, батьків цікавило кожне слово', stats: { agreeableness: 6 } },
+                    { emoji: '🤐', text: 'Поверхнево, батьки не особливо цікавилися', stats: { neuroticism: 4 } },
+                    { emoji: '😠', text: 'Часто сварився про школу й учителів', stats: { neuroticism: 6 } }
+                ]
+            },
+            {
+                age: 9,
+                emoji: '👨‍🏫',
+                scene: 'Вчитель дивиться на тебе з надією...',
+                q: 'Учителі про тебе казали...?',
+                opts: [
+                    { emoji: '🧠', text: 'Розумний, але неслухняний', stats: { openness: 7 } },
+                    { emoji: '😇', text: 'Добра дитина, приклад для інших', stats: { agreeableness: 8 } },
+                    { emoji: '⚠️', text: 'Проблемна дитина, часто сидить в кутку', stats: { neuroticism: 6 } }
+                ]
+            },
+            {
+                age: 11,
+                emoji: '🎨',
+                scene: 'Шкільна виставка робіт...',
+                q: 'Батьки твої інтереси в школі...?',
+                opts: [
+                    { emoji: '❤️', text: 'Активно підтримували й заохочували', stats: { agreeableness: 8 } },
+                    { emoji: '🤝', text: 'Допускали, якщо не шкодили навчанню', stats: { conscientiousness: 6 } },
+                    { emoji: '🚫', text: 'Забороняли й ретельно контролювали', stats: { neuroticism: 6 } }
+                ]
+            },
+            {
+                age: 10,
+                emoji: '🌈',
+                scene: 'Ти розповідаєш про своє захоплення...',
+                q: 'Твої інтереси й хобі в школі...?',
+                opts: [
+                    { emoji: '⭐', text: 'Я був цікавий до всього, що траплялось', stats: { openness: 8 } },
+                    { emoji: '🎯', text: 'Конкретно захоплювався кількома речами', stats: { conscientiousness: 7 } },
+                    { emoji: '😶', text: 'Ні в чому конкретно не цікавився', stats: { conscientiousness: -3 } }
+                ]
+            },
+            {
+                age: 8,
+                emoji: '😢',
+                scene: 'Невдача. Ти не пройшов тест чи програв змаганню...',
+                q: 'Як ти реагував на першу велику невдачу?',
+                opts: [
+                    { emoji: '💔', text: 'Впав духом, але потім почав заново', stats: { neuroticism: 4, conscientiousness: 7 } },
+                    { emoji: '😌', text: 'Легко пережив, життя йде далі', stats: { openness: 6 } },
+                    { emoji: '🔥', text: 'Розлютився й кинув все', stats: { neuroticism: 7 } }
+                ]
+            },
+            {
+                age: 11,
+                emoji: '📖',
+                scene: 'Бібліотека школи. Тиша й книги...',
+                q: 'Книжки в школі тебе...?',
+                opts: [
+                    { emoji: '❤️', text: 'Вільно захоплювали, я часто читав', stats: { openness: 8 } },
+                    { emoji: '😑', text: 'Нудили, я читав тільки для школи', stats: { conscientiousness: 5 } },
+                    { emoji: '❌', text: 'Я практично не читав', stats: { openness: -3 } }
+                ]
+            },
+            {
+                age: 9,
+                emoji: '🏆',
+                scene: 'Спортивне змаганння або конкурс...',
+                q: 'Змаганнях у школі ти...?',
+                opts: [
+                    { emoji: '🥇', text: 'Брав активну участь, часто перемагав', stats: { conscientiousness: 7, extraversion: 7 } },
+                    { emoji: '🤔', text: 'Деколи брав участь', stats: { conscientiousness: 4 } },
+                    { emoji: '😶', text: 'Ніколи не брав участь', stats: { neuroticism: 5 } }
+                ]
+            },
+            {
+                age: 10,
+                emoji: '👪',
+                scene: 'Батьків день у школі. Твої батьки приходять...',
+                q: 'Коли батьки приходили до школи...?',
+                opts: [
+                    { emoji: '😊', text: 'Я гордився ними', stats: { agreeableness: 7 } },
+                    { emoji: '😳', text: 'Мне було незручно, я соромився', stats: { neuroticism: 5 } },
+                    { emoji: '😐', text: 'Мене це не цікавило', stats: { conscientiousness: -2 } }
+                ]
+            },
+            {
+                age: 8,
+                emoji: '💰',
+                scene: 'Шкільна столова. Борщ і булочка...',
+                q: 'Шкільне харчування тебе...?',
+                opts: [
+                    { emoji: '😋', text: 'Подобалось, я з задоволенням їв', stats: { agreeableness: 4 } },
+                    { emoji: '😑', text: 'Було нейтрально', stats: { conscientiousness: 3 } },
+                    { emoji: '😖', text: 'Не подобалось, я часто голодував', stats: { neuroticism: 4 } }
+                ]
+            },
+            {
+                age: 11,
+                emoji: '🎓',
+                scene: 'Останній день школи. Розповідаються оцінки...',
+                q: 'До кінця початкової школи ти чув(ла)...?',
+                opts: [
+                    { emoji: '🌟', text: 'Ти здатний(а) більше, але не старанешся', stats: { conscientiousness: 5, openness: 5 } },
+                    { emoji: '😊', text: 'Ти добре займаєшся, продовжуй так', stats: { agreeableness: 6 } },
+                    { emoji: '😔', text: 'Ти маєш проблеми, потрібна допомога', stats: { neuroticism: 6 } }
+                ]
+            },
+            {
+                age: 9,
+                emoji: '🚸',
+                scene: 'Дорога до школи. Ти йдеш з друзями...',
+                q: 'Дорога до школи була...?',
+                opts: [
+                    { emoji: '😊', text: 'Веселою, я чекав цього часу', stats: { extraversion: 7 } },
+                    { emoji: '😨', text: 'Часто лякаюча, особливо взимку', stats: { neuroticism: 5 } },
+                    { emoji: '🚴', text: 'Незалежною - я сам(а) добирався(лась)', stats: { conscientiousness: 6 } }
+                ]
+            },
+            {
+                age: 11,
+                emoji: '🎉',
+                scene: 'Випускний з 4-го класу. Всім учням дарують грамоти...',
+                q: 'Випускний з початкової школи...?',
+                opts: [
+                    { emoji: '😢', text: 'Я був(ла) сумний(на), але також радий(на)', stats: { neuroticism: 3 } },
+                    { emoji: '🎉', text: 'Я радувався(лась) змінам, чекав(ла) нового', stats: { openness: 7 } },
+                    { emoji: '😰', text: 'Я боявся(лась) змін, хотів(ла) залишитись', stats: { neuroticism: 6 } }
+                ]
+            }
+        ];
+
+        let gameState = {
+            question: 0,
+            stats: { openness: 50, conscientiousness: 50, extraversion: 50, agreeableness: 50, neuroticism: 50 },
+            selectedOption: null
+        };
+
+        function nextQuestion() {
+            if (gameState.question >= questions.length) {
+                finishLevel();
+                return;
+            }
+
+            const q = questions[gameState.question];
+            document.getElementById('age-display').textContent = `${q.age} років`;
+            document.getElementById('scene-emoji').textContent = q.emoji;
+            document.getElementById('scene-description').textContent = q.scene;
+            document.getElementById('question-text').textContent = q.q;
+            document.getElementById('progress-text').textContent = `Питання ${gameState.question + 1}/${questions.length}`;
+            document.getElementById('progress-fill').style.width = ((gameState.question + 1) / questions.length) * 100 + '%';
+
+            const optDiv = document.getElementById('options-container');
+            optDiv.innerHTML = '';
+
+            q.opts.forEach((opt, idx) => {
+                const btn = document.createElement('div');
+                btn.className = 'option';
+                btn.innerHTML = `<div class="option-emoji">${opt.emoji}</div><div class="option-text">${opt.text}</div>`;
+                btn.onclick = () => selectOption(idx, opt, q);
+                optDiv.appendChild(btn);
+            });
+
+            document.getElementById('next-btn').disabled = true;
+            gameState.selectedOption = null;
+        }
+
+        function selectOption(idx, opt, q) {
+            gameState.selectedOption = idx;
+            document.querySelectorAll('.option').forEach((el, i) => {
+                el.classList.toggle('selected', i === idx);
+            });
+
+            Object.keys(opt.stats).forEach(stat => {
+                gameState.stats[stat] = Math.max(0, Math.min(100, gameState.stats[stat] + opt.stats[stat]));
+            });
+
+            updateStats();
+            document.getElementById('next-btn').disabled = false;
+            gameState.question++;
+        }
+
+        function updateStats() {
+            document.getElementById('stats-container').innerHTML = `
+                <div class="stat">
+                    <div class="stat-name">Креативність</div>
+                    <div class="stat-value">${gameState.stats.openness}</div>
+                    <div class="stat-bar"><div class="stat-bar-fill" style="width: ${gameState.stats.openness}%;"></div></div>
+                </div>
+                <div class="stat">
+                    <div class="stat-name">Дисципліна</div>
+                    <div class="stat-value">${gameState.stats.conscientiousness}</div>
+                    <div class="stat-bar"><div class="stat-bar-fill" style="width: ${gameState.stats.conscientiousness}%;"></div></div>
+                </div>
+                <div class="stat">
+                    <div class="stat-name">Соціальність</div>
+                    <div class="stat-value">${gameState.stats.extraversion}</div>
+                    <div class="stat-bar"><div class="stat-bar-fill" style="width: ${gameState.stats.extraversion}%;"></div></div>
+                </div>
+                <div class="stat">
+                    <div class="stat-name">Емпатія</div>
+                    <div class="stat-value">${gameState.stats.agreeableness}</div>
+                    <div class="stat-bar"><div class="stat-bar-fill" style="width: ${gameState.stats.agreeableness}%;"></div></div>
+                </div>
+            `;
+        }
+
+        function finishLevel() {
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('ending-screen').classList.remove('hidden');
+
+            const dominant = Object.entries(gameState.stats)
+                .sort((a, b) => b[1] - a[1])[0][0];
+
+            const descriptions = {
+                openness: 'Школа розкрила твою творчість. Ти любиш нове й незвичайне. Учителі помітили твій потенціал.',
+                conscientiousness: 'Ти відповідальний учень. Школа тебе легко була - ти завжди готувався до уроків.',
+                extraversion: 'Ти соціальна дитина. Школа - це був чудовий час для тебе, повний друзів і веселих моментів.',
+                agreeableness: 'Ти добра й чуйна дитина. Однолітки тебе люблять, учителі поважають за твою вихованість.',
+                neuroticism: 'Школа буває важкою для чутливої дитини. Тобі потрібна підтримка й розуміння.'
+            };
+
+            document.getElementById('ending-text').textContent = descriptions[dominant] ||
+                'Школа стала важливою частиною твого становлення.';
+        }
+
+        function goToTeenYears() {
+            alert('👦 9 КЛАСІВ ЧЕКАЮТЬ!\n\nТвої досягнення в школі:\n' +
+                `Креативність: ${gameState.stats.openness}\n` +
+                `Дисципліна: ${gameState.stats.conscientiousness}\n` +
+                `Соціальність: ${gameState.stats.extraversion}\n` +
+                `Емпатія: ${gameState.stats.agreeableness}\n\n` +
+                'Тепер найцікавіше - період становлення...');
+        }
+
+        updateStats();
+        nextQuestion();
+    </script>
+</body>
+</html>
