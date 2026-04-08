@@ -1,0 +1,184 @@
+{
+  "level": 3,
+  "name": "9 Класів",
+  "age_range": "12-16 років",
+  "color": "#FF6F00",
+  "questions": [
+    {
+      "age": 12,
+      "emoji": "🪞",
+      "scene": "Дзеркало. Ванна кімнатка. Ніч.",
+      "question": "Ти дивишся на себе. Тіло змінюється. Голос сідає. Це дивно.",
+      "options": [
+        { "emoji": "😳", "text": "Хвилюватися й цікавитися", "stats": { "openness": 7, "neuroticism": 5 } },
+        { "emoji": "😌", "text": "Прийняти й рухатися далі", "stats": { "conscientiousness": 7, "openness": -2 } },
+        { "emoji": "😟", "text": "Боятися й закритися в собі", "stats": { "neuroticism": 8, "extraversion": -5 } }
+      ]
+    },
+    {
+      "age": 13,
+      "emoji": "❤️",
+      "scene": "Парк. Вечір. Ліза бере твою руку.",
+      "question": "'Артур, я люблю тебе.' Твоє серце безумовно б'ється.",
+      "options": [
+        { "emoji": "❤️", "text": "Сказати що ти її теж любиш", "stats": { "openness": 8, "agreeableness": 8 }, "flags": { "true_love": true } },
+        { "emoji": "😳", "text": "Мовчати й насолоджуватись", "stats": { "neuroticism": 5, "openness": 6 } },
+        { "emoji": "😔", "text": "Сказати щось обережне", "stats": { "conscientiousness": 7, "openness": -5 } }
+      ]
+    },
+    {
+      "age": 13,
+      "emoji": "🚬",
+      "scene": "За школою. Друг Влад вийняг сигарету.",
+      "question": "'Хочеш спробувати? Це не страшно.' Інші дивляться.",
+      "options": [
+        { "emoji": "✅", "text": "Спробувати й подобатись групі", "stats": { "openness": 7, "extraversion": 8 }, "flags": { "smoker": true } },
+        { "emoji": "❌", "text": "Ні, спасибі. Я йду", "stats": { "conscientiousness": 8, "extraversion": -3 } },
+        { "emoji": "❓", "text": "Питати чому він це робить", "stats": { "openness": 7, "conscientiousness": 6 } }
+      ]
+    },
+    {
+      "age": 14,
+      "emoji": "😢",
+      "scene": "Дома. Ніч. Ліжко. Темно.",
+      "question": "Все здається безглуздим. Чому учиться? Чому жити? Батьківські сварки.",
+      "options": [
+        { "emoji": "😢", "text": "Плакати й розповісти матері", "stats": { "agreeableness": 7, "neuroticism": 8 }, "flags": { "depressed": true } },
+        { "emoji": "🎮", "text": "Грати всю ніч й забути", "stats": { "openness": -5, "conscientiousness": -5 }, "flags": { "escapist": true } },
+        { "emoji": "🏃", "text": "Бігти на вулицю й гуляти", "stats": { "extraversion": 7, "openness": 6 }, "flags": { "runner": true } }
+      ]
+    },
+    {
+      "age": 14,
+      "emoji": "🔍",
+      "scene": "Історія. Урок. Вчитель говорить про світ.",
+      "question": "'Але хто насправді контролює світ?' Мабуть, масони?",
+      "options": [
+        { "emoji": "🔍", "text": "Розслідувати теорії змови", "stats": { "openness": 8, "conscientiousness": -3 }, "flags": { "conspiracy_aware": true } },
+        { "emoji": "📚", "text": "Слухати вчителя й учити факти", "stats": { "conscientiousness": 8, "openness": -5 } },
+        { "emoji": "🤔", "text": "Питати більше й думати критично", "stats": { "openness": 8, "conscientiousness": 6 } }
+      ]
+    },
+    {
+      "age": 14,
+      "emoji": "💪",
+      "scene": "Батьківський кабінет. Дисципліна.",
+      "question": "Батько: 'Потрібна дисципліна. Рано просипатися. Вчити кожен день.'",
+      "options": [
+        { "emoji": "💪", "text": "Слухати й спробувати", "stats": { "conscientiousness": 8, "agreeableness": 7 }, "flags": { "discipline_adopted": true } },
+        { "emoji": "😔", "text": "Слухати й чути тиск", "stats": { "neuroticism": 7, "agreeableness": 5 }, "flags": { "pressured": true } },
+        { "emoji": "⚡", "text": "Сказати його шлях не мій", "stats": { "extraversion": 8, "conscientiousness": -6 }, "flags": { "defiant": true } }
+      ]
+    },
+    {
+      "age": 15,
+      "emoji": "💔",
+      "scene": "Парк. Вечір. Ліза сідає далеко.",
+      "question": "'Артур, я не можу це далі робити. Ти змінюєшся.'",
+      "options": [
+        { "emoji": "😢", "text": "Плакати й просити назад", "stats": { "neuroticism": 8, "agreeableness": 8 }, "flags": { "heartbroken": true } },
+        { "emoji": "😠", "text": "Сказати щось обридливе й піти", "stats": { "extraversion": 7, "neuroticism": 7 }, "flags": { "angry_hurt": true } },
+        { "emoji": "🤐", "text": "Просто прийняти й піти мовчки", "stats": { "conscientiousness": 7, "openness": -3 }, "flags": { "stoic": true } }
+      ]
+    },
+    {
+      "age": 14,
+      "emoji": "⚰️",
+      "scene": "Шлях додому. Розбився на мотоциклі.",
+      "question": "Влад помер. Вчора він бігав. Сьогодні він мертвий. Перша реальна смерть.",
+      "options": [
+        { "emoji": "😭", "text": "Плакати й мучитися провиною", "stats": { "neuroticism": 9, "agreeableness": 8 }, "flags": { "friend_died": true } },
+        { "emoji": "😔", "text": "Відчути біль але продовжити", "stats": { "neuroticism": 7, "conscientiousness": 7 }, "flags": { "grief": true } },
+        { "emoji": "⚡", "text": "Розлютитися на світ", "stats": { "neuroticism": 8, "extraversion": 8 }, "flags": { "angry": true } }
+      ]
+    },
+    {
+      "age": 15,
+      "emoji": "🏥",
+      "scene": "Лікарня. Матір в ліжку.",
+      "question": "Доктор: 'Серцевий напад.' Матір: 'Артур, ти маєш бути сильним.'",
+      "options": [
+        { "emoji": "❤️", "text": "Обіцяти бути сильним й дбати", "stats": { "conscientiousness": 9, "agreeableness": 8 }, "flags": { "responsible": true } },
+        { "emoji": "😢", "text": "Плакати й почути страх", "stats": { "neuroticism": 9, "conscientiousness": 6 }, "flags": { "frightened": true } },
+        { "emoji": "⚡", "text": "Розлютитися на докторів", "stats": { "extraversion": 8, "conscientiousness": -4 }, "flags": { "angry": true } }
+      ]
+    },
+    {
+      "age": 15,
+      "emoji": "😍",
+      "scene": "Кінотеатр. Нова дівчинка Анна. Фільм закінчується.",
+      "question": "Вона дивиться в тебе. Потім це відбувається. Перший поцілунок.",
+      "options": [
+        { "emoji": "😍", "text": "Поцілунок назад й відносини", "stats": { "openness": 8, "extraversion": 7 }, "flags": { "new_love": true } },
+        { "emoji": "😳", "text": "Мовчати й бути замкнутим", "stats": { "neuroticism": 6, "openness": -3 } },
+        { "emoji": "⚡", "text": "Втекти й не відповідати", "stats": { "extraversion": -5, "neuroticism": 7 } }
+      ]
+    },
+    {
+      "age": 16,
+      "emoji": "⚔️",
+      "scene": "Дома. Батько сидить поруч. Серйозна розмова.",
+      "question": "'Артур, армія змінює людину. Це честь служити. Через рік рішення.'",
+      "options": [
+        { "emoji": "⚔️", "text": "Слухати й погодитися можливо", "stats": { "conscientiousness": 8, "agreeableness": 7 }, "flags": { "army_acceptance": true } },
+        { "emoji": "😔", "text": "Слухати й бути сумним", "stats": { "neuroticism": 7, "agreeableness": 6 }, "flags": { "anxious_army": true } },
+        { "emoji": "❌", "text": "Сказати не піду", "stats": { "extraversion": 8, "conscientiousness": -5 }, "flags": { "army_rejection": true } }
+      ]
+    },
+    {
+      "age": 16,
+      "emoji": "❌",
+      "scene": "Класна кімнатка. Тест повертається.",
+      "question": "'1'. Батько говорив потрібна дисципліна. Ти учив(ла). Не вийшло.",
+      "options": [
+        { "emoji": "😔", "text": "Плакати й просити прощення", "stats": { "neuroticism": 8, "conscientiousness": 8 }, "flags": { "academic_failure": true } },
+        { "emoji": "⚡", "text": "Сказати всюди несправедливо", "stats": { "extraversion": 7, "conscientiousness": -5 }, "flags": { "resentful": true } },
+        { "emoji": "💪", "text": "Вирішити вчити ще більше", "stats": { "conscientiousness": 9, "openness": 4 } }
+      ]
+    },
+    {
+      "age": 16,
+      "emoji": "🍺",
+      "scene": "Подвір'я. Ніч. Друзі пропонують напиток.",
+      "question": "'Це адреналін! Це свобода!' Ти ніколи не пив(ла).",
+      "options": [
+        { "emoji": "✅", "text": "Спробувати й почути свободу", "stats": { "openness": 7, "extraversion": 8 }, "flags": { "drinker": true } },
+        { "emoji": "❌", "text": "Ні. Я йду дома", "stats": { "conscientiousness": 8, "extraversion": -3 } },
+        { "emoji": "🤔", "text": "Спробувати один раз й піти", "stats": { "openness": 6, "conscientiousness": 6 } }
+      ]
+    },
+    {
+      "age": 16,
+      "emoji": "🎯",
+      "scene": "Школа. Профорієнтація. Вибір професії.",
+      "question": "Профорієнтолог: 'Що ти хочеш робити?' Батько - армія. Матір - науки.",
+      "options": [
+        { "emoji": "⚔️", "text": "Слухати батька й вибрати армію", "stats": { "conscientiousness": 8, "agreeableness": 7 }, "flags": { "father_choice": true } },
+        { "emoji": "🎨", "text": "Слухати серце й мистецтво", "stats": { "openness": 8, "conscientiousness": -5 }, "flags": { "art_choice": true } },
+        { "emoji": "📚", "text": "Вибрати компроміс - науки", "stats": { "conscientiousness": 7, "agreeableness": 7 }, "flags": { "science_choice": true } }
+      ]
+    },
+    {
+      "age": 17,
+      "emoji": "🪖",
+      "scene": "Військовий центр. Весна 2004. Збір.",
+      "question": "Батько: 'Це обов'язково.' Хлопці без одягу. Інструктор кричить.",
+      "options": [
+        { "emoji": "⚔️", "text": "Бути готовим й проявити себе", "stats": { "conscientiousness": 8, "extraversion": 6 }, "flags": { "ready_army": true } },
+        { "emoji": "😨", "text": "Боятися й розуміти біль", "stats": { "neuroticism": 8, "conscientiousness": 4 }, "flags": { "scared_army": true } },
+        { "emoji": "💪", "text": "Викликатися добровільцем", "stats": { "conscientiousness": 9, "extraversion": 7 }, "flags": { "volunteer": true } }
+      ]
+    },
+    {
+      "age": 17,
+      "emoji": "💔",
+      "scene": "Парк. Вечір. Анна запитує про майбутнє.",
+      "question": "'Артур, ти йдеш в армію?' Вона плаче. 'Я не знаю чи чекати.'",
+      "options": [
+        { "emoji": "❤️", "text": "Обіцяти повернутися й чекати", "stats": { "agreeableness": 8, "conscientiousness": 8 }, "flags": { "promise_love": true } },
+        { "emoji": "😔", "text": "Сказати не знаєш й грустити", "stats": { "neuroticism": 7, "openness": 6 } },
+        { "emoji": "⚡", "text": "Сказати йди неважливо від неї", "stats": { "extraversion": 7, "conscientiousness": -5 }, "flags": { "independent": true } }
+      ]
+    }
+  ]
+}
