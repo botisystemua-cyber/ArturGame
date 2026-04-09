@@ -44,7 +44,7 @@
       "question": "Вчителька: 'Артур, ти можеш краще.' Батько сказав: 'Тільки оцінки вище 4!'",
       "options": [
         { "emoji": "😔", "text": "Плакати й обіцяти краще учитися", "stats": { "neuroticism": 7, "conscientiousness": 8 }, "flags": { "academic_pressure": true } },
-        { "emoji": "😠", "text": "Сказати вчителеві що вона несправедлива", "stats": { "extraversion": 7, "openness": 6 }, "flags": { "defiant_authority": true } },
+        { "emoji": "😠", "text": "Сказати вчительці що вона несправедлива", "stats": { "extraversion": 7, "openness": 6 }, "flags": { "defiant_authority": true } },
         { "emoji": "💪", "text": "Вирішити самому й учити більше", "stats": { "conscientiousness": 9, "openness": 4 } }
       ]
     },
@@ -56,25 +56,25 @@
       "options": [
         { "emoji": "😍", "text": "Дивитися й мріяти", "stats": { "openness": 8, "neuroticism": 4 }, "flags": { "first_crush": true } },
         { "emoji": "❌", "text": "Ігнорувати й сконцентруватися", "stats": { "conscientiousness": 8, "openness": -3 } },
-        { "emoji": "😳", "text": "Спробувати з'ясуватися з нею", "stats": { "extraversion": 8, "neuroticism": 6 } }
+        { "emoji": "😳", "text": "Спробувати познайомитися з нею", "stats": { "extraversion": 8, "neuroticism": 6 } }
       ]
     },
     {
       "age": 9,
       "emoji": "⚠️",
       "scene": "Класна кімнатка. Вчитель несправедлив.",
-      "question": "Вчитель: 'За що?!' - 'Сідай й молчи.'",
+      "question": "Вчитель: 'За що?!' - 'Сідай й мовчи.'",
       "options": [
         { "emoji": "😢", "text": "Плакати й слухатися", "stats": { "agreeableness": 8, "neuroticism": 6 }, "flags": { "submissive": true } },
         { "emoji": "⚡", "text": "Кричати й вийти з класу", "stats": { "extraversion": 8, "conscientiousness": -5 }, "flags": { "rebellious_authority": true } },
-        { "emoji": "🤐", "text": "Молчати й обурюватися в собі", "stats": { "neuroticism": 7, "openness": -2 }, "flags": { "resentful": true } }
+        { "emoji": "🤐", "text": "Мовчати й обурюватися в собі", "stats": { "neuroticism": 7, "openness": -2 }, "flags": { "resentful": true } }
       ]
     },
     {
       "age": 10,
       "emoji": "🏆",
       "scene": "Спортзал. Легкоатлетичне змагання.",
-      "question": "Ти побігаєш швидче за всіх! КІНЧ! Ти перший!",
+      "question": "Ти біжиш швидше за всіх! ФІНІШ! Ти перший!",
       "options": [
         { "emoji": "🏆", "text": "Радіти й хотіти змаганнях", "stats": { "extraversion": 8, "conscientiousness": 8 }, "flags": { "athletic": true } },
         { "emoji": "😳", "text": "Соромиться від уваги й піти", "stats": { "neuroticism": 6, "extraversion": -5 } },
@@ -96,7 +96,7 @@
       "age": 11,
       "emoji": "❤️",
       "scene": "Батьківський дім. Батько й матір близько.",
-      "question": "Батько: 'Артур, пам'ятай. Сім'я - найважливіше. Я хотів вибачити.'",
+      "question": "Батько: 'Артур, пам'ятай. Сім'я - найважливіше. Я хотів вибачитися.'",
       "options": [
         { "emoji": "❤️", "text": "Обнімати їх й радіти", "stats": { "agreeableness": 8, "openness": 7 }, "flags": { "family_healed": true } },
         { "emoji": "😳", "text": "Бути смущеним і йти", "stats": { "neuroticism": 5, "openness": -4 } },
@@ -107,11 +107,11 @@
       "age": 11,
       "emoji": "📖",
       "scene": "Бібліотека школи. Вчителька показує книгу.",
-      "question": "'Артур, я думаю цю книгу ти полюбиш'. Пригода. Витязь у замку...",
+      "question": "'Артур, я думаю цю книгу ти полюбиш.' Пригоди. Лицар у замку...",
       "options": [
         { "emoji": "📖", "text": "Зачитатися й читати до кінця", "stats": { "openness": 8, "conscientiousness": 7 }, "flags": { "bookworm": true } },
         { "emoji": "😑", "text": "Прочитати кілька сторінок й кинути", "stats": { "conscientiousness": -3, "openness": -4 } },
-        { "emoji": "✋", "text": "Запитати чи можна читати про крим", "stats": { "openness": 6, "conscientiousness": 5 } }
+        { "emoji": "✋", "text": "Запитати чи можна читати про Крим", "stats": { "openness": 6, "conscientiousness": 5 } }
       ]
     },
     {
@@ -140,7 +140,7 @@
       "age": 12,
       "emoji": "⚔️",
       "scene": "Батьківський кабінет. Серйозна розмова.",
-      "question": "Батько: 'Коли ти буде старшим, служба Україні - це честь.'",
+      "question": "Батько: 'Коли ти будеш старшим, служба Україні - це честь.'",
       "options": [
         { "emoji": "⚔️", "text": "Слухати й думати про армію", "stats": { "conscientiousness": 7, "openness": 6 }, "flags": { "aware_army": true } },
         { "emoji": "😔", "text": "Бути сумним й спитати чому", "stats": { "neuroticism": 6, "openness": 7 } },
