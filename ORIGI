@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚔️ АРТУР: ЙОГО ЖИТТЄВІ ВИБОРИ</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { --color: #d4a574; --color-rgb: 212,165,116; }
+        body { font-family: 'Georgia', serif; background: #0a0a1a; color: #e0e0e0; min-height: 100vh; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 2rem; }
+        .hidden { display: none !important; }
+
+        /* SPLASH SCREEN */
+        .splash { text-align: center; padding: 4rem 2rem; }
+        .splash-title { font-size: 72px; font-weight: 900; color: #d4a574; margin-bottom: 1rem; text-shadow: 0 4px 20px rgba(212,165,116,0.4); }
+        .splash-subtitle { font-size: 24px; color: #888; margin-bottom: 3rem; }
+        .dedication-box { background: linear-gradient(135deg, rgba(212,165,116,0.15) 0%, rgba(212,165,116,0.05) 100%); border: 2px solid #d4a574; border-radius: 16px; padding: 3rem; margin-bottom: 3rem; }
+        .dedication-title { font-size: 18px; color: #d4a574; font-weight: 700; margin-bottom: 1.5rem; }
+        .dedication-text { font-size: 15px; line-height: 1.8; color: #aaa; margin-bottom: 1.5rem; }
+        .dedication-from { font-size: 13px; color: #d4a574; font-style: italic; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(212,165,116,0.3); }
+        .quote-box { background: rgba(76,175,80,0.05); border-left: 4px solid #4CAF50; padding: 2rem; margin-bottom: 2rem; border-radius: 8px; font-size: 14px; color: #aaa; font-style: italic; line-height: 1.8; }
+        .button-start { background: linear-gradient(135deg, #d4a574 0%, #a67c52 100%); color: #fff; border: none; border-radius: 12px; padding: 1.5rem 4rem; font-size: 18px; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 8px 30px rgba(212,165,116,0.3); transition: all 0.3s; }
+        .button-start:hover { filter: brightness(1.1); transform: translateY(-4px); }
+        .button-start:disabled { opacity: 0.7; cursor: not-allowed; }
+
+        /* GAME SCREEN */
+        .header { text-align: center; margin-bottom: 2rem; }
+        .header-age { font-size: 13px; color: #888; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.5rem; }
+        .header-title { font-size: 48px; font-weight: 700; color: var(--color); margin-bottom: 0.5rem; }
+        .header-location { font-size: 16px; color: #aaa; font-style: italic; }
+        .progress { text-align: center; font-size: 12px; color: #666; margin-bottom: 2rem; }
+        .stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .stat { background: rgba(var(--color-rgb), 0.1); border-left: 3px solid var(--color); padding: 1rem; border-radius: 6px; text-align: center; }
+        .stat-label { font-size: 10px; color: #888; text-transform: uppercase; margin-bottom: 0.5rem; }
+        .stat-value { font-size: 22px; font-weight: 700; color: var(--color); }
+        .scene-box { background: linear-gradient(135deg, rgba(var(--color-rgb), 0.08) 0%, rgba(var(--color-rgb), 0.02) 100%); border-left: 4px solid var(--color); padding: 2.5rem; border-radius: 8px; margin-bottom: 2rem; line-height: 1.9; font-size: 16px; }
+        .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+        @media (max-width: 768px) { .choices { grid-template-columns: 1fr; } }
+        .choice { background: #1a1a2e; border: 2px solid #444; border-radius: 10px; padding: 1.5rem; cursor: pointer; transition: all 0.3s; }
+        .choice:hover { border-color: var(--color); transform: translateY(-4px); box-shadow: 0 8px 20px rgba(var(--color-rgb), 0.2); }
+        .choice.selected { border-color: var(--color); background: rgba(var(--color-rgb), 0.15); }
+        .choice-emoji { font-size: 32px; display: block; margin-bottom: 0.75rem; }
+        .choice-text { font-size: 14px; color: #aaa; line-height: 1.5; }
+        .button { background: var(--color); color: #0a0a1a; border: none; border-radius: 8px; padding: 1rem 2rem; font-size: 14px; font-weight: 700; cursor: pointer; width: 100%; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; }
+        .button:hover:not(:disabled) { filter: brightness(1.1); transform: translateY(-2px); }
+        .button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* ENDING SCREEN */
+        .ending { text-align: center; padding: 4rem 2rem; }
+        .ending-emoji { font-size: 100px; margin-bottom: 2rem; }
+        .ending-title { font-size: 40px; font-weight: 700; color: var(--color); margin-bottom: 2rem; }
+        .ending-text { font-size: 16px; line-height: 1.8; color: #aaa; max-width: 700px; margin: 0 auto 3rem; }
+        .ending-btn { background: linear-gradient(135deg, var(--color) 0%, #a67c52 100%); color: #fff; border: none; border-radius: 8px; padding: 1.5rem 3rem; font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 2rem; text-transform: uppercase; letter-spacing: 1px; }
+        .ending-btn:hover { filter: brightness(1.1); }
+
+        /* ANALYSIS SCREEN */
+        .analysis-title { font-size: 56px; font-weight: 900; color: #4CAF50; margin-bottom: 1rem; text-shadow: 0 4px 20px rgba(76,175,80,0.4); }
+        .analysis-subtitle { font-size: 24px; color: #888; margin-bottom: 2rem; font-style: italic; }
+        .analysis-content { background: linear-gradient(135deg, rgba(76,175,80,0.1) 0%, rgba(76,175,80,0.05) 100%); border-left: 4px solid #4CAF50; padding: 3rem; border-radius: 12px; margin-bottom: 3rem; line-height: 1.9; font-size: 16px; }
+        .analysis-content p { margin-bottom: 1.5rem; }
+        .password-box { background: #2a2a2a; border: 2px solid #4CAF50; padding: 2rem; border-radius: 12px; text-align: center; margin: 3rem 0; }
+        .password-label { font-size: 14px; color: #888; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 2px; }
+        .password-value { font-size: 72px; font-weight: 900; color: #4CAF50; font-family: 'Courier New'; letter-spacing: 8px; margin-bottom: 1rem; }
+        .instruction { font-size: 14px; color: #aaa; font-style: italic; }
+        .stats-box { background: rgba(76,175,80,0.05); padding: 2rem; border-radius: 8px; margin: 2rem 0; }
+        .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+        .stat-item { background: #2a2a2a; padding: 1rem; border-radius: 6px; border-left: 3px solid #4CAF50; }
+        .stat-item-label { font-size: 12px; color: #888; text-transform: uppercase; margin-bottom: 0.5rem; }
+        .stat-item-value { font-size: 28px; font-weight: 700; color: #4CAF50; }
+        .incomplete { background: rgba(255,111,0,0.1); border-left: 4px solid #FF6F00; padding: 2rem; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- SPLASH -->
+        <div id="splash-screen">
+            <div class="splash">
+                <div class="splash-title">⚔️ АРТУР</div>
+                <div class="splash-subtitle">ЙОГО ЖИТТЯ</div>
+                <div class="dedication-box">
+                    <div class="dedication-title">Від Богданчіка</div>
+                    <div class="dedication-text">
+                        Артур, це гра про твоє життя.
+                        <br/><br/>
+                        Від народження до 18 років. Твої вибори. Твоя доля.
+                        <br/><br/>
+                        Просто пройди гру і дозволь їй показати тобі, хто ти насправді.
+                    </div>
+                    <div class="dedication-from">
+                        "Дружба з тобою - знак правильного шляху"
+                    </div>
+                </div>
+                <div class="quote-box">
+                    "Кожен вибір - це крок у невідомість.
+                    <br/>Але все це було писано ще до твого народження."
+                    <br/><br/>
+                    — Давньоєгипетське прислів'я
+                </div>
+                <button class="button-start" onclick="startGame()">ПОЧАТИ</button>
+            </div>
+        </div>
+
+        <!-- GAME -->
+        <div id="game-screen" class="hidden">
+            <div class="header">
+                <div class="header-age" id="age"></div>
+                <div class="header-title" id="title"></div>
+                <div class="header-location" id="location"></div>
+            </div>
+            <div class="progress" id="progress"></div>
+            <div class="stats" id="stats"></div>
+            <div class="scene-box" id="narration"></div>
+            <div class="choices" id="choices"></div>
+            <button class="button" id="next-btn" onclick="nextScene()" disabled>ДАЛІ →</button>
+        </div>
+
+        <!-- ENDING -->
+        <div id="ending-screen" class="hidden">
+            <div class="ending">
+                <div class="ending-emoji" id="end-emoji">🌱</div>
+                <div class="ending-title" id="end-title"></div>
+                <div class="ending-text" id="end-text"></div>
+                <button class="ending-btn" onclick="goToNext()">ПРОДОВЖИТИ →</button>
+            </div>
+        </div>
+
+        <!-- ANALYSIS -->
+        <div id="analysis-screen" class="hidden">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <div class="analysis-title" id="analysis-title">⚔️ АРТУР</div>
+                <div class="analysis-subtitle" id="analysis-subtitle">Розпалення</div>
+            </div>
+            <div class="analysis-content" id="analysis-content"></div>
+            <div class="stats-box" id="analysis-stats"></div>
+            <div id="password-section" class="password-box hidden">
+                <div class="password-label">🔓 КОД РОЗПАЛЕННЯ:</div>
+                <div class="password-value">95</div>
+                <div class="instruction">
+                    Позвоніть Богданові й скажіть цей код.
+                    <br/><br/>
+                    Він розповість вам всю суть цієї гри.
+                    <br/><br/>
+                    "Дружба з тобою - знак правильного шляху"
+                </div>
+            </div>
+            <div id="incomplete-section" class="incomplete hidden">
+                <h2 style="color: #FF6F00; margin-bottom: 1rem;">⚠️ ГРА НЕ ПРОЙДЕНА</h2>
+                <p style="color: #aaa; margin-bottom: 1rem;">
+                    Артур, твої вибори привели тебе іншим шляхом.
+                    <br/><br/>
+                    Це не означає що ти помилився. Це означає що ти знайшов(ла) іншу долю.
+                    <br/><br/>
+                    Гра закінчена, але твоя історія продовжується.
+                </p>
+                <p style="color: #aaa;">
+                    Богдан розповість тобі про це коли ми поговоримо.
+                </p>
+            </div>
+            <button class="button" onclick="repeatGame()" style="margin-top: 2rem;">ПРОЙТИ ЗАНОВО</button>
+        </div>
+    </div>
+
+    <script>
+        // ============ ДАНІ ============
+        const GAME_DATA = {
+            1: [
+                {id:1,age:3,title:"Народження",location:"Батьківський дім. Ранок.",question:"Ти просипаєшся. Світло входить крізь вікна. Матір входить: 'Добрий ранок, Артур! Тобі 3 роки.' Внизу чути голоси батька. Суворо. Ти не розумієш. Але відчуваєш - це важливо. Матір чекає на твою реакцію.",options:[{emoji:"❤️",text:"Обнімаєш матір й усміхаєшся",stats:{agreeableness:6,openness:4}},{emoji:"😴",text:"Сідаєш й плачеш",stats:{neuroticism:5,openness:-2}},{emoji:"🏃",text:"Скакаєш й скличеш батька",stats:{extraversion:7,conscientiousness:3}}]},
+                {id:2,age:4,title:"Конфлікт батьків",location:"Гостинна. Батьки сваряться.",question:"Батько й матір один проти одного. Батько червоніє. Матір плаче. 'Це твоя вина!' Ти в середині. Що робити?",options:[{emoji:"😢",text:"Плачеш й бігаєш до матері",stats:{agreeableness:8,neuroticism:6},flags:{traumatized:true}},{emoji:"🤐",text:"Беруєш батька за руку",stats:{conscientiousness:7,openness:5},flags:{peacemaker:true}},{emoji:"🏃",text:"Бігаєш на вулицю й сідаєш один",stats:{extraversion:5,openness:7},flags:{avoidant:true}}]},
+                {id:3,age:5,title:"Батько й ремінь",location:"Дитячий кабінет. Ніч.",question:"Ти зламав чашку батька. Вона впала й розбилась. Батько входить. Його обличчя темнішає. Він веде ремінь. 'Артур, ти мав бути обережним!' Твоє серце б'ється швидко.",options:[{emoji:"🙏",text:"Просити вибачення й плакати",stats:{agreeableness:8,neuroticism:7,conscientiousness:6}},{emoji:"⚡",text:"Сказати батькові що це його вина",stats:{extraversion:7,openness:6},flags:{rebellious:true}},{emoji:"🏃",text:"Втекти й сховатись",stats:{neuroticism:8,openness:-2},flags:{fearful:true}}]},
+                {id:4,age:5,title:"Перша смерть",location:"Двір. День.",question:"Твій кіт Мурзик не просипаєтся. Вчора грав. Сьогодні лежить неподвижно. Матір сидить поруч з червоними очима. 'Артур, він пішов спати назавжди. На небо.' Ти не розумієш. Але розумієш - його немає.",options:[{emoji:"😭",text:"Плачеш разом з матір'ю",stats:{agreeableness:8,neuroticism:8},flags:{empathetic:true,death_aware:true}},{emoji:"❓",text:"Питаєш де він пішов й коли повернеться",stats:{openness:8,conscientiousness:4},flags:{curious:true}},{emoji:"😶",text:"Мовчиш й йдеш грати в піску",stats:{openness:-4,conscientiousness:3},flags:{avoidant:true}}]},
+                {id:5,age:4,title:"Дво́р і діти",location:"Дитячий майданчик. Полудень.",question:"Інші діти граються. Крикують, сміються, бігають дико. Ти в краї. Вони тебе не помічають. Що робити?",options:[{emoji:"⚽",text:"Кинутися до них й грати",stats:{extraversion:8,conscientiousness:-2,neuroticism:-3}},{emoji:"🎨",text:"Сісти й малювати в піску",stats:{openness:8,conscientiousness:5,extraversion:-4}},{emoji:"👀",text:"Спостерігати з дистанції",stats:{conscientiousness:6,openness:5,extraversion:-5}}]},
+                {id:6,age:6,title:"Батьківська похвала",location:"Батьківський кабінет.",question:"Батько дивиться на твій малюнок. Ти намалював сонце. Батько мовчить. Потім: 'Хм. Гарно. Але чому не писанина як інші?' Матір вступається: 'Це гарно! Артур робить великі речи!'",options:[{emoji:"😊",text:"Слухати матір й продовжити",stats:{agreeableness:7,openness:8},flags:{creative_supported:true}},{emoji:"😔",text:"Грустити й кинути малюнок",stats:{conscientiousness:-5,neuroticism:7},flags:{discouraged:true}},{emoji:"⚡",text:"Показати й писанину й малюнок",stats:{conscientiousness:8,extraversion:5}}]},
+                {id:7,age:5,title:"Батько спить",location:"Гостинна. Вечір.",question:"Батько спить на дивані. Пізна ніч. Пахне алкоголем. Матір показує палець на губах: 'Тихо...'",options:[{emoji:"🤫",text:"Тихо йти до ліжка",stats:{agreeableness:7,conscientiousness:7},flags:{obedient:true}},{emoji:"😔",text:"Плакати потай",stats:{neuroticism:8,agreeableness:-5},flags:{sad:true}},{emoji:"⚡",text:"Спробувати розбудити батька",stats:{extraversion:6,conscientiousness:-5},flags:{reckless:true}}]},
+                {id:8,age:6,title:"Матір & ремесло",location:"Кухня. Вихідний день.",question:"Матір готує хлеб. Дозволяє тобі помагати. Твої руки в дозі. 'Артур, дивись. Якщо робити з любов'ю, то все вийде смачніше.' Батько дивиться й кивує.",options:[{emoji:"❤️",text:"Дослухатися й навчатися з любов'ю",stats:{agreeableness:8,conscientiousness:8},flags:{loved:true}},{emoji:"🏃",text:"Швидко й бігти грати",stats:{extraversion:8,conscientiousness:-5}},{emoji:"❓",text:"Питати матір про хлеб",stats:{openness:8,conscientiousness:5}}]},
+                {id:9,age:4,title:"Ніч & страх",location:"Дитяче ліжко. Ніч.",question:"Темрява. Ти не любиш темноту. Батько: 'Великі хлопці не бояться'. Матір: 'Я поруч, не бійся'. Ліжко темне. Звуки ззовні. Твоє серце б'ється.",options:[{emoji:"😨",text:"Кричати й впуститися до батьків",stats:{neuroticism:8,agreeableness:6}},{emoji:"💪",text:"Закрити очи й спати самому",stats:{conscientiousness:7,extraversion:-5,neuroticism:-3}},{emoji:"🕯️",text:"Попросити матір залишити світло",stats:{agreeableness:7,openness:4}}]},
+                {id:10,age:6,title:"День народження",location:"Батьківський дім.",question:"Торт. Свічки. Друзі. Батько дарує фігурку воєнного: 'Ти маєш бути сильним! Як воєнний!' Матір дарує фарби: 'Ти можеш малювати світ!' Батько дивиться сподівливо на воєнного.",options:[{emoji:"⚔️",text:"Обрати воєнного й показати батькові",stats:{agreeableness:6,conscientiousness:8},flags:{father_pleaser:true}},{emoji:"🎨",text:"Обрати фарби й малювати",stats:{openness:9,conscientiousness:-3},flags:{artistic:true}},{emoji:"😊",text:"Грати з обома й усміхнутися",stats:{agreeableness:8,extraversion:7,conscientiousness:6}}]},
+                {id:11,age:6,title:"Першиий день школи",location:"Ворота школи.",question:"Велика школа. Батько й матір водять за руки. Вчителька: 'Ось новий учень!' 'Артур', каже батько. 'Прощавайте, батьки!' Вони йдуть. Ти один.",options:[{emoji:"😢",text:"Плакати й дивитись услід батькам",stats:{neuroticism:7,agreeableness:6},flags:{anxious:true}},{emoji:"👀",text:"Тихо спостерігати дітей",stats:{conscientiousness:6,openness:5}},{emoji:"🚀",text:"Кинутися вперед й познайомитись",stats:{extraversion:8,conscientiousness:-2,neuroticism:-4}}]}
+            ],
+            2: [
+                {id:12,age:7,title:"Перший клас",location:"Класна кімнатка.",question:"Цифри на дошці. Вчителька: 'Артур, яка перша буква твого імені?' Всі дивляться на тебе.",options:[{emoji:"✋",text:"Піднести руку й правильно відповісти",stats:{conscientiousness:7,extraversion:6}},{emoji:"😶",text:"Мовчати й бути невидимим",stats:{neuroticism:5,conscientiousness:4}},{emoji:"🤪",text:"Сказати щось дивне й розважити",stats:{extraversion:8,openness:7}}]},
+                {id:13,age:8,title:"Булінг починається",location:"Подвір'я школи.",question:"Старший хлопець: 'Хей, мале! Чому ти такий дивний?' Інші сміються.",options:[{emoji:"😢",text:"Плакати й бігти до вчителя",stats:{neuroticism:8,agreeableness:5},flags:{bullied:true}},{emoji:"💪",text:"Сказати йому щось різко й піти",stats:{extraversion:8,conscientiousness:-3},flags:{defiant:true}},{emoji:"🤐",text:"Мовчати й уникати його",stats:{neuroticism:6,openness:-3},flags:{avoidant:true}}]},
+                {id:14,age:8,title:"Перший друг",location:"Дитячий парк.",question:"Хлопець Максим підходить: 'Хай! Ти хочеш грати?' Він усміхається.",options:[{emoji:"🤝",text:"Так! Гратися й стати друзями",stats:{agreeableness:8,extraversion:8},flags:{has_friend:true}},{emoji:"😶",text:"Ні, спасибі. Я хочу сам",stats:{extraversion:-5,conscientiousness:6}},{emoji:"❓",text:"Питати його про щось",stats:{openness:7,conscientiousness:5}}]},
+                {id:15,age:9,title:"Перша оцінка 2",location:"Класна кімнатка.",question:"Вчителька повертає завдання: '2'. 'Артур, ти можеш краще.' Батько сказав: 'Тільки оцінки вище 4!'",options:[{emoji:"😔",text:"Плакати й обіцяти краще",stats:{neuroticism:7,conscientiousness:8},flags:{academic_pressure:true}},{emoji:"😠",text:"Сказати вчителеві несправедливо",stats:{extraversion:7,openness:6},flags:{defiant_authority:true}},{emoji:"💪",text:"Вирішити й учити більше",stats:{conscientiousness:9,openness:4}}]},
+                {id:16,age:9,title:"Перша закоханість",location:"На уроці.",question:"Ліза сидить перед тобою. Довге русе волосся. Коли посміхається...",options:[{emoji:"😍",text:"Дивитися й мріяти",stats:{openness:8,neuroticism:4},flags:{first_crush:true}},{emoji:"❌",text:"Ігнорувати й сконцентруватися",stats:{conscientiousness:8,openness:-3}},{emoji:"😳",text:"Спробувати з'ясуватися",stats:{extraversion:8,neuroticism:6}}]},
+                {id:17,age:9,title:"Вчитель несправедлив",location:"Класна кімнатка.",question:"Вчитель посадив тебе в кут. 'За що?!' 'Сідай й молчи.'",options:[{emoji:"😢",text:"Плакати й слухатися",stats:{agreeableness:8,neuroticism:6},flags:{submissive:true}},{emoji:"⚡",text:"Кричати й вийти з класу",stats:{extraversion:8,conscientiousness:-5},flags:{rebellious_authority:true}},{emoji:"🤐",text:"Молчати й обурюватися",stats:{neuroticism:7,openness:-2},flags:{resentful:true}}]},
+                {id:18,age:10,title:"Успіх на змаганні",location:"Спортзал школи.",question:"Ти побігаєш швидче за всіх! КІНЧ! Ти перший! Клас аплодує.",options:[{emoji:"🏆",text:"Радіти й хотіти змаганнях",stats:{extraversion:8,conscientiousness:8},flags:{athletic:true}},{emoji:"😳",text:"Соромиться й піти",stats:{neuroticism:6,extraversion:-5}},{emoji:"⚡",text:"Хвалити себе й кинути виклик",stats:{extraversion:9,conscientiousness:-4}}]},
+                {id:19,age:10,title:"Дружба розривається",location:"Подвір'я школи.",question:"Максим грає з іншими. 'Артур, ми тобі не підходимо.' Перша зрада.",options:[{emoji:"😢",text:"Плакати й замкнутися",stats:{neuroticism:8,agreeableness:5},flags:{trust_broken:true}},{emoji:"⚡",text:"Сказати щось обридливе",stats:{extraversion:7,openness:6},flags:{hurt_angry:true}},{emoji:"😔",text:"Просто піти й не говорити",stats:{neuroticism:7,extraversion:-5},flags:{withdrawn:true}}]},
+                {id:20,age:11,title:"Мама & батько близько",location:"Батьківський дім.",question:"Батько й матір сидять. Батько: 'Артур, пам'ятай. Сім'я - найважливіше. Я хотів вибачити.' Матір плаче. Щасливі сльози.",options:[{emoji:"❤️",text:"Обнімати їх й радіти",stats:{agreeableness:8,openness:7},flags:{family_healed:true}},{emoji:"😳",text:"Бути смущеним й йти",stats:{neuroticism:5,openness:-4}},{emoji:"🤔",text:"Питати їх про то що було",stats:{openness:8,conscientiousness:6}}]},
+                {id:21,age:11,title:"Книга & вечір",location:"Бібліотека школи.",question:"Вчителька показує книгу: 'Артур, я думаю цю книгу ти полюбиш'. Пригода. Витязь у замку...",options:[{emoji:"📖",text:"Зачитатися й читати",stats:{openness:8,conscientiousness:7},flags:{bookworm:true}},{emoji:"😑",text:"Прочитати й кинути",stats:{conscientiousness:-3,openness:-4}},{emoji:"✋",text:"Запитати про крим",stats:{openness:6,conscientiousness:5}}]},
+                {id:22,age:11,title:"Музика чи спорт",location:"Музична кімнатка.",question:"Вчитель: 'Співай в хорі?' Тренер: 'Потрібен ти в команді!' Два шляхи.",options:[{emoji:"🎵",text:"Обрати музику й хор",stats:{openness:8,agreeableness:6},flags:{musical:true}},{emoji:"⚽",text:"Обрати спорт й команду",stats:{extraversion:8,conscientiousness:7},flags:{athlete:true}},{emoji:"😔",text:"Не вибирати й залишитися",stats:{neuroticism:6,conscientiousness:-4}}]},
+                {id:23,age:11,title:"Переведення до нової школи",location:"Нова школа.",question:"Батько переводить тебе. 'Більш серйозна школа.' Новий клас. Нові діти.",options:[{emoji:"🚀",text:"Кинутися вперед й адаптуватися",stats:{extraversion:8,conscientiousness:7}},{emoji:"😢",text:"Плакати й хотіти старої",stats:{neuroticism:8,agreeableness:6}},{emoji:"📚",text:"Сконцентруватися на навчанні",stats:{conscientiousness:9,extraversion:-4}}]},
+                {id:24,age:12,title:"Батько про долю",location:"Батьківський кабінет.",question:"Батько: 'Коли ти буде старшим, служба Україні - це честь.'",options:[{emoji:"⚔️",text:"Слухати й думати про армію",stats:{conscientiousness:7,openness:6},flags:{aware_army:true}},{emoji:"😔",text:"Бути сумним й спитати чому",stats:{neuroticism:6,openness:7}},{emoji:"⚡",text:"Сказати батькові не хочу",stats:{extraversion:7,conscientiousness:-5},flags:{reject_army:true}}]}
+            ],
+            3: [
+                {id:25,age:12,title:"Фізичні зміни",location:"Дзеркало. Ванна кімнатка.",question:"Ти дивишся на себе. Тіло змінюється. Голос сідає. Це дивно.",options:[{emoji:"😳",text:"Хвилюватися й цікавитися",stats:{openness:7,neuroticism:5}},{emoji:"😌",text:"Прийняти й рухатися",stats:{conscientiousness:7,openness:-2}},{emoji:"😟",text:"Боятися й закритися",stats:{neuroticism:8,extraversion:-5}}]},
+                {id:26,age:13,title:"Перша справжня любов",location:"Парк. Вечір.",question:"Ліза бере твою руку. 'Артур, я люблю тебе.' Твоє серце безумовно б'ється.",options:[{emoji:"❤️",text:"Сказати що ти її теж любиш",stats:{openness:8,agreeableness:8},flags:{true_love:true}},{emoji:"😳",text:"Мовчати й насолоджуватись",stats:{neuroticism:5,openness:6}},{emoji:"😔",text:"Сказати щось обережне",stats:{conscientiousness:7,openness:-5}}]},
+                {id:27,age:13,title:"Друг запропонував сигарету",location:"За школою.",question:"Влад вийняг сигарету. 'Хочеш спробувати?' Інші дивляються.",options:[{emoji:"✅",text:"Спробувати й подобатись",stats:{openness:7,extraversion:8},flags:{smoker:true}},{emoji:"❌",text:"Ні, спасибі. Я йду",stats:{conscientiousness:8,extraversion:-3}},{emoji:"❓",text:"Питати чому",stats:{openness:7,conscientiousness:6}}]},
+                {id:28,age:14,title:"Перша депресія",location:"Дома. Ніч.",question:"Ти лежиш. Все здається безглуздим. Чому учиться? Чому жити?",options:[{emoji:"😢",text:"Плакати й розповісти матері",stats:{agreeableness:7,neuroticism:8},flags:{depressed:true}},{emoji:"🎮",text:"Грати всю ніч",stats:{openness:-5,conscientiousness:-5},flags:{escapist:true}},{emoji:"🏃",text:"Бігти на вулицю й гуляти",stats:{extraversion:7,openness:6},flags:{runner:true}}]},
+                {id:29,age:14,title:"Теорія змови на уроці",location:"Історія. Урок.",question:"'Але хто насправді контролює світ?' А якщо це масони?",options:[{emoji:"🔍",text:"Розслідувати теорії",stats:{openness:8,conscientiousness:-3},flags:{conspiracy_aware:true}},{emoji:"📚",text:"Слухати вчителя й учити",stats:{conscientiousness:8,openness:-5}},{emoji:"🤔",text:"Питати й думати критично",stats:{openness:8,conscientiousness:6}}]},
+                {id:30,age:14,title:"Батько про дисципліну",location:"Батьківський кабінет.",question:"Батько: 'Потрібна дисципліна. Рано просипатися. Вчити кожен день.'",options:[{emoji:"💪",text:"Слухати й спробувати",stats:{conscientiousness:8,agreeableness:7},flags:{discipline_adopted:true}},{emoji:"😔",text:"Слухати й чути тиск",stats:{neuroticism:7,agreeableness:5},flags:{pressured:true}},{emoji:"⚡",text:"Сказати його шлях не мій",stats:{extraversion:8,conscientiousness:-6},flags:{defiant:true}}]},
+                {id:31,age:15,title:"Розставання з Лізою",location:"Парк. Вечір.",question:"Ліза: 'Артур, я не можу це далі робити. Ти змінюєшся.'",options:[{emoji:"😢",text:"Плакати й просити назад",stats:{neuroticism:8,agreeableness:8},flags:{heartbroken:true}},{emoji:"😠",text:"Сказати щось обридливе",stats:{extraversion:7,neuroticism:7},flags:{angry_hurt:true}},{emoji:"🤐",text:"Прийняти й піти мовчки",stats:{conscientiousness:7,openness:-3},flags:{stoic:true}}]},
+                {id:32,age:14,title:"Друг помер",location:"Шлях додому.",question:"Влад розбився на мотоциклі. Він був дивний й прекрасний. Тепер мертвий. Перша реальна смерть.",options:[{emoji:"😭",text:"Плакати й мучитися",stats:{neuroticism:9,agreeableness:8},flags:{friend_died:true}},{emoji:"😔",text:"Відчути біль але продовжити",stats:{neuroticism:7,conscientiousness:7},flags:{grief:true}},{emoji:"⚡",text:"Розлютитися на світ",stats:{neuroticism:8,extraversion:8},flags:{angry:true}}]},
+                {id:33,age:15,title:"Мати хвора",location:"Лікарня.",question:"Матір лежить. Доктор: 'Серцевий напад'. 'Артур, ти маєш бути сильним.'",options:[{emoji:"❤️",text:"Обіцяти бути сильним",stats:{conscientiousness:9,agreeableness:8},flags:{responsible:true}},{emoji:"😢",text:"Плакати й почути страх",stats:{neuroticism:9,conscientiousness:6},flags:{frightened:true}},{emoji:"⚡",text:"Розлютитися на докторів",stats:{extraversion:8,conscientiousness:-4},flags:{angry:true}}]},
+                {id:34,age:15,title:"Перший поцілунок",location:"Кінотеатр. Фільм.",question:"Нова дівчинка Анна сидить поруч. Вона бере твою руку. Потім це відбувається.",options:[{emoji:"😍",text:"Поцілунок назад й відносини",stats:{openness:8,extraversion:7},flags:{new_love:true}},{emoji:"😳",text:"Мовчати й бути замкнутим",stats:{neuroticism:6,openness:-3}},{emoji:"⚡",text:"Втекти й не відповідати",stats:{extraversion:-5,neuroticism:7}}]},
+                {id:35,age:16,title:"Батько про армію серйозно",location:"Дома.",question:"Батько: 'Артур, я хочу розповісти... Армія змінює людину. Через рік рішення.'",options:[{emoji:"⚔️",text:"Слухати й погодитися",stats:{conscientiousness:8,agreeableness:7},flags:{army_acceptance:true}},{emoji:"😔",text:"Слухати й бути сумним",stats:{neuroticism:7,agreeableness:6},flags:{anxious_army:true}},{emoji:"❌",text:"Сказати не піду",stats:{extraversion:8,conscientiousness:-5},flags:{army_rejection:true}}]},
+                {id:36,age:16,title:"Академічна невдача",location:"Класна кімнатка.",question:"Вчитель повертає тест: '1'. Ти учив(ла). Не вийшло.",options:[{emoji:"😔",text:"Плакати й просити прощення",stats:{neuroticism:8,conscientiousness:8},flags:{academic_failure:true}},{emoji:"⚡",text:"Сказати несправедливо",stats:{extraversion:7,conscientiousness:-5},flags:{resentful:true}},{emoji:"💪",text:"Вирішити вчити більше",stats:{conscientiousness:9,openness:4}}]},
+                {id:37,age:16,title:"Вечір з друзями",location:"Подвір'я. Ніч.",question:"Друзі пропонують напиток. 'Це адреналін! Це свобода!' Ти ніколи не пив(ла).",options:[{emoji:"✅",text:"Спробувати й почути свободу",stats:{openness:7,extraversion:8},flags:{drinker:true}},{emoji:"❌",text:"Ні. Я йду дома",stats:{conscientiousness:8,extraversion:-3}},{emoji:"🤔",text:"Спробувати один раз",stats:{openness:6,conscientiousness:6}}]},
+                {id:38,age:16,title:"Вибір професії",location:"Школа. Консультація.",question:"Профорієнтолог: 'Артур, що ти хочеш робити?' Батько - армія. Матір - науки. Ти - щось третє?",options:[{emoji:"⚔️",text:"Слухати батька й армію",stats:{conscientiousness:8,agreeableness:7},flags:{father_choice:true}},{emoji:"🎨",text:"Слухати серце й мистецтво",stats:{openness:8,conscientiousness:-5},flags:{art_choice:true}},{emoji:"📚",text:"Вибрати компроміс - науки",stats:{conscientiousness:7,agreeableness:7},flags:{science_choice:true}}]},
+                {id:39,age:17,title:"Військовий збір 2004",location:"Військовий центр.",question:"Весна 2004. Батько водить. 'Це обов'язково.' Хлопці без одягу. Інструктор кричить.",options:[{emoji:"⚔️",text:"Бути готовим й проявити себе",stats:{conscientiousness:8,extraversion:6},flags:{ready_army:true}},{emoji:"😨",text:"Боятися й розуміти біль",stats:{neuroticism:8,conscientiousness:4},flags:{scared_army:true}},{emoji:"💪",text:"Викликатися добровільцем",stats:{conscientiousness:9,extraversion:7},flags:{volunteer:true}}]},
+                {id:40,age:17,title:"Розмова з Анною",location:"Парк. Вечір.",question:"Анна запитує: 'Артур, ти йдеш в армію?' Вона плаче. 'Я не знаю чи чекати.'",options:[{emoji:"❤️",text:"Обіцяти повернутися",stats:{agreeableness:8,conscientiousness:8},flags:{promise_love:true}},{emoji:"😔",text:"Сказати не знаєш",stats:{neuroticism:7,openness:6}},{emoji:"⚡",text:"Сказати неважливо від неї",stats:{extraversion:7,conscientiousness:-5},flags:{independent:true}}]}
+            ],
+            4: [
+                {id:41,age:18,title:"Останній день школи",location:"Школа.",question:"Це останній день. Батьки гордий. Матір плаче. 'Ти дорослий тепер.'",options:[{emoji:"🎓",text:"Подякувати й сказати рішення",stats:{agreeableness:8,conscientiousness:8}},{emoji:"😔",text:"Відчути вагу світу",stats:{neuroticism:7,openness:6}},{emoji:"🚀",text:"Радіти що дитинство закінчилось",stats:{extraversion:8,conscientiousness:-2}}]},
+                {id:42,age:18,title:"Останній розговор з батьком",location:"Дома. Кабінет.",question:"Батько: 'Я бачив твої вибори. Ти дисциплінований. Армія чекає. Це честь служити.'",options:[{emoji:"⚔️",text:"Сказати ДА й обіцяти",stats:{conscientiousness:9,agreeableness:8},flags:{army_chosen:true}},{emoji:"😔",text:"Сказати не знаєш",stats:{neuroticism:8,conscientiousness:5}},{emoji:"❌",text:"Сказати НІ й піти своїм",stats:{extraversion:8,conscientiousness:-6},flags:{reject_father:true}}]},
+                {id:43,age:18,title:"Військовий комісаріат. Присяга.",location:"Військовий комісаріат.",question:"Офіцер: 'Ви присягаєте служити Україні?' Ти підписуєш. Рука тремтить.",options:[{emoji:"✍️",text:"Підписати й присягнути",stats:{conscientiousness:10,agreeableness:8},flags:{army_sworn:true}},{emoji:"🤔",text:"Помовчати й спитати себе",stats:{neuroticism:7,openness:8}},{emoji:"❌",text:"Вийти й не підписувати",stats:{conscientiousness:-8,extraversion:7},flags:{army_refused:true}}]},
+                {id:44,age:18,title:"Останній вечір дома",location:"Батьківський дім.",question:"Матір готує. Батько мовчить. Анна прощається. Завтра - все змінюється.",options:[{emoji:"❤️",text:"Обнімати всіх й подякувати",stats:{agreeableness:9,conscientiousness:8},flags:{grateful:true}},{emoji:"😢",text:"Плакати й розуміти",stats:{neuroticism:8,openness:7},flags:{emotional:true}},{emoji:"💪",text:"Бути сильним й готовим",stats:{conscientiousness:9,extraversion:6},flags:{ready:true}}]},
+                {id:45,age:18,title:"Шлях до казарми",location:"Вокзал. Ранок.",question:"Батько водить. Матір платить. Анна дивиться. Ти сідаєш в автобус. Дитинство виходить.",options:[{emoji:"👋",text:"Дивитися назад й помахати",stats:{agreeableness:8,conscientiousness:8},flags:{nostalgic:true}},{emoji:"👀",text:"Дивитися вперед й не назад",stats:{conscientiousness:9,extraversion:7},flags:{focused:true}},{emoji:"😢",text:"Плакати й розуміти",stats:{neuroticism:8,openness:7},flags:{emotional_departure:true}}]},
+                {id:46,age:18,title:"Перший день в армії",location:"Казарма.",question:"Інструктор кричить. Усі вишикувані. Ти в строю. Батька немає. 'Ви - вояки!'",options:[{emoji:"⚔️",text:"Сказати собі правильний шлях",stats:{conscientiousness:10,agreeableness:8},flags:{army_commitment:true}},{emoji:"😔",text:"Відчути що помилився",stats:{neuroticism:8,conscientiousness:3},flags:{regret:true}},{emoji:"💪",text:"Бути готовим й не думати",stats:{conscientiousness:9,extraversion:6},flags:{soldier_mode:true}}]},
+                {id:47,age:18,title:"КРИТИЧНЕ: ТВІЙ ВИБІР",location:"Казарма. Ніч першого дня.",question:"Ти лежиш. Дитинство позаду. 50 виборів привели сюди. ОСТАННІЙ ВИБІР:",options:[{emoji:"⚔️",text:"ДА! ПОЗВОНІТЬ БОГДАНОВІ!",stats:{conscientiousness:10,agreeableness:8},flags:{army_final:true},password:95},{emoji:"😔",text:"Я помилився. Не маю бути.",stats:{neuroticism:9,conscientiousness:-5},flags:{army_regret:true}},{emoji:"🚀",text:"Я не знаю що робити.",stats:{neuroticism:8,openness:8},flags:{army_confused:true}}]}
+            ]
+        };
+
+        const ANALYSIS_TEMPLATES = {
+            army_final: { title: "⚔️ ТИ - ВОЄННИЙ", text: "Артур, твої 50 виборів від дитинства до 18 років привели тебе сюди.\n\nДо АРМІЇ.\n\nНе тому що батько примушував.\nНе тому що мати просила.\nНе тому що Анна залишилась.\n\nА тому що ТВОЯ СУТНІСТЬ вела тебе туди.\n\nДисципліна? 88%\nЕмпатія? 78%\nСтабільність? 72%\n\nТи йдеш в армію не від страху. Ти йдеш від СИЛИ.\n\nВід дитинства ти робив вибори які складали воєнну людину.\nБатько суворий - ти навчився дисципліні.\nСмерть друга - ти навчився цінувати честь.\nРозставання - ти навчився жертвувати.\n\nЦе був твій шлях. ТВОЯ ДОЛЯ.\n\nА тепер ти в казармі. Першої ночі. Ліжко звичайне. Небо звичайне.\n\nАле ти ЗНАЄШ що це правильно.\n\nПозвоніть Богданові й скажіть КОД. Він чекає.", password: true },
+            artist: { title: "🎨 ТИ - ТВОРЕЦЬ", text: "Артур, твої вибори привели тебе в ІНШИЙ СВІТ.\n\nВ світ де немає казарми.\nДе немає ремінця й дисципліни.\nДе є ФАРБИ й МУЗИКА й СЛОВА.\n\nКреативність? 86%\nЧутливість? 74%\nВідкритість? 82%\n\nБатько хотів воєнного.\nАле ТИ обрав художника.\n\nУ рівні 1 ти малював сонце.\nУ рівні 2 ти читав книги про витязів.\nУ рівні 3 ти чув музику вночі.\nУ рівні 4... ти не пішов в армію.\n\nЦе не поразка. ЦЕ ПЕРЕМОГА.\n\nТи став(ла) СВІДИЙ людиною.\n\nТвоя доля - творити. Не армія.\n\nГра закінчена.", password: false },
+            engineer: { title: "⚙️ ТИ - ІНЖЕНЕР", text: "Артур, твої вибори привели тебе в світ ЛОГІКИ й НАУКИ.\n\nДисципліна? 81%\nКреативність? 68%\nРозум? Високий\n\nТи робив вибори які складали людину РОЗРАХУНКУ.\nНе армії. Не мистецтва. А МАЙБУТНЬОГО.\n\nТвоє дитинство було про навчання.\nТвоя школа була про науки.\nТвої 9 класів були про вибір.\n\nІ на останньому крупку ти вибрав інженерію.\n\nЦе мудро. Це потрібно.\n\nАле гра не пройдена. Тому що ти не пішов в армію.\n\nБатько чекав іншого.\n\nТвоя доля - створювати. Не руйнувати.", password: false },
+            teacher: { title: "📚 ТИ - ВЧИТЕЛЬ", text: "Артур, твої вибори привели тебе до ЛЮДЕЙ.\n\nЕмпатія? 82%\nСоціальність? 79%\nДисципліна? 72%\n\nТи робив вибори які показали НА ІНШОМУ.\nКогда друг був один - ти його приймав.\nКогда учень був проблемним - ти розумів.\nКогда світ був важкий - ти помагав.\n\nТи став(ла) ВЧИТЕЛЕМ.\n\nНе в казармі. А в КЛАСІ.\n\nТвоя дитинство готувала тебе не до форми.\nА до того щоб змінити жизнь дітей.\n\nЦе прекрасно. Це потрібно.\n\nАле гра не пройдена. Тому що ти не пішов в армію.", password: false },
+            depressed: { title: "😢 ТИ - ТОТ ХТО СТРАЖДАВ", text: "Артур, твої вибори привели тебе в темне місце.\n\nСтабільність? 38%\nНевротизм? 78%\nДепресія? Реальна\n\nТи робив вибори які показали БІЛЬ.\nСмерть друга - ти не оправився.\nРозставання - ти зламався.\nБатьківський тиск - ти не витримав.\n\nІ на останньому крупку ти сказав(ла):\n'Я не знаю що робити.'\n\nЦе правда. Ти НЕ знаєш.\n\nГра закінчена. Але твоя історія ЩЕ ПОЧАЛАСЬ.\n\nТому що найголовніше - це понять що тобі потрібна допомога.\n\nТе OK. Це нормально.\n\nБогдан розповість тобі про це.", password: false }
+        };
+
+        // ============ ИГРОВОЙ МЕХАНІЗМ ============
+        const GameState = { level: 1, qIndex: 0, stats: { openness: 50, conscientiousness: 50, extraversion: 50, agreeableness: 50, neuroticism: 50 }, flags: {}, password: null, selectedChoice: null };
+        const levelColors = { 1: { color: '#d4a574', rgb: '212,165,116' }, 2: { color: '#2196F3', rgb: '33,150,243' }, 3: { color: '#FF6F00', rgb: '255,111,0' }, 4: { color: '#4CAF50', rgb: '76,175,80' } };
+
+        function startGame() { setColor(1); show('game-screen'); hide('splash-screen'); renderScene(); }
+        function setColor(level) { const c = levelColors[level]; document.documentElement.style.setProperty('--color', c.color); document.documentElement.style.setProperty('--color-rgb', c.rgb); }
+        function show(id) { document.getElementById(id).classList.remove('hidden'); }
+        function hide(id) { document.getElementById(id).classList.add('hidden'); }
+        function renderScene() {
+            if (GameState.qIndex >= GAME_DATA[GameState.level].length) { finishLevel(); return; }
+            const q = GAME_DATA[GameState.level][GameState.qIndex];
+            document.getElementById('age').textContent = `${q.age} років`;
+            document.getElementById('title').textContent = q.title;
+            document.getElementById('location').textContent = q.location;
+            document.getElementById('narration').textContent = q.question;
+            document.getElementById('progress').textContent = `Сцена ${GameState.qIndex + 1}/${GAME_DATA[GameState.level].length}`;
+            updateStats();
+            renderChoices(q);
+            GameState.selectedChoice = null;
+            document.getElementById('next-btn').disabled = true;
+        }
+        function renderChoices(q) {
+            const c = document.getElementById('choices');
+            c.innerHTML = '';
+            q.options.forEach((opt, i) => {
+                const div = document.createElement('div');
+                div.className = 'choice';
+                div.innerHTML = `<div class="choice-emoji">${opt.emoji}</div><div class="choice-text">${opt.text}</div>`;
+                div.onclick = () => selectChoice(i, opt);
+                c.appendChild(div);
+            });
+        }
+        function selectChoice(idx, opt) {
+            GameState.selectedChoice = idx;
+            document.querySelectorAll('.choice').forEach((el, i) => el.classList.toggle('selected', i === idx));
+            Object.keys(opt.stats || {}).forEach(s => GameState.stats[s] = Math.max(0, Math.min(100, GameState.stats[s] + opt.stats[s])));
+            if (opt.flags) Object.assign(GameState.flags, opt.flags);
+            if (opt.password) GameState.password = opt.password;
+            updateStats();
+            document.getElementById('next-btn').disabled = false;
+        }
+        function updateStats() {
+            const html = `
+                <div class="stat"><div class="stat-label">Креативність</div><div class="stat-value">${GameState.stats.openness}</div></div>
+                <div class="stat"><div class="stat-label">Дисципліна</div><div class="stat-value">${GameState.stats.conscientiousness}</div></div>
+                <div class="stat"><div class="stat-label">Соціальність</div><div class="stat-value">${GameState.stats.extraversion}</div></div>
+                <div class="stat"><div class="stat-label">Емпатія</div><div class="stat-value">${GameState.stats.agreeableness}</div></div>
+                <div class="stat"><div class="stat-label">Стабільність</div><div class="stat-value">${100 - GameState.stats.neuroticism}</div></div>
+            `;
+            document.getElementById('stats').innerHTML = html;
+        }
+        function nextScene() { GameState.qIndex++; if (GameState.qIndex < GAME_DATA[GameState.level].length) { renderScene(); } else { finishLevel(); } }
+        function finishLevel() {
+            hide('game-screen'); show('ending-screen');
+            const levels = ['🌱', '🎓', '👦', '⚔️'];
+            const titles = ['Дитинство пройдено', 'Школа пройдена', '9 класів пройдено', 'Казарма. Перша ніч.'];
+            const texts = ['Ти виріс. Роки пройшли швидко. Перед тобою - нова частина.', 'Дитинство позаду. Тепер - серйозний світ.', 'Ти не дитина. Ти не дорослий. Ти на розпутті.', 'Дитинство закінчилось. Батько позаду. Матір позаду. Тепер - тільки ти й Україна.'];
+            document.getElementById('end-emoji').textContent = levels[GameState.level - 1];
+            document.getElementById('end-title').textContent = titles[GameState.level - 1];
+            document.getElementById('end-text').textContent = texts[GameState.level - 1];
+        }
+        function goToNext() {
+            if (GameState.level < 4) { GameState.level++; GameState.qIndex = 0; setColor(GameState.level); hide('ending-screen'); show('game-screen'); renderScene(); } else { showAnalysis(); }
+        }
+        function showAnalysis() {
+            hide('ending-screen'); show('analysis-screen');
+            let ending = ANALYSIS_TEMPLATES.artist;
+            if (GameState.password === 95) { ending = ANALYSIS_TEMPLATES.army_final; }
+            else if (GameState.stats.openness > 80 && GameState.stats.conscientiousness < 65) { ending = ANALYSIS_TEMPLATES.artist; }
+            else if (GameState.stats.conscientiousness > 80 && GameState.stats.openness > 75) { ending = ANALYSIS_TEMPLATES.engineer; }
+            else if (GameState.stats.agreeableness > 80 && GameState.stats.extraversion > 75) { ending = ANALYSIS_TEMPLATES.teacher; }
+            else if (GameState.stats.neuroticism > 75) { ending = ANALYSIS_TEMPLATES.depressed; }
+            document.getElementById('analysis-title').textContent = ending.title;
+            document.getElementById('analysis-content').textContent = ending.text;
+            const statsHTML = `
+                <div class="stat-row"><div class="stat-item"><div class="stat-item-label">Креативність</div><div class="stat-item-value">${GameState.stats.openness}%</div></div><div class="stat-item"><div class="stat-item-label">Дисципліна</div><div class="stat-item-value">${GameState.stats.conscientiousness}%</div></div></div>
+                <div class="stat-row"><div class="stat-item"><div class="stat-item-label">Соціальність</div><div class="stat-item-value">${GameState.stats.extraversion}%</div></div><div class="stat-item"><div class="stat-item-label">Емпатія</div><div class="stat-item-value">${GameState.stats.agreeableness}%</div></div></div>
+            `;
+            document.getElementById('analysis-stats').innerHTML = statsHTML;
+            if (GameState.password === 95) { show('password-section'); hide('incomplete-section'); } else { hide('password-section'); show('incomplete-section'); }
+        }
+        function repeatGame() { GameState.level = 1; GameState.qIndex = 0; GameState.stats = { openness: 50, conscientiousness: 50, extraversion: 50, agreeableness: 50, neuroticism: 50 }; GameState.flags = {}; GameState.password = null; setColor(1); hide('analysis-screen'); show('splash-screen'); }
+    </script>
+</body>
+</html>
